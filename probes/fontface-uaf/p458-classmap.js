@@ -34,6 +34,13 @@
   try { localStorage.setItem('p458k', String(SIZES[next])); } catch(e) {}
 
   B('BOOT-k' + k);
+  // visible heartbeat: a blank page is indistinguishable from a dead one
+  var hb = document.createElement('pre');
+  hb.id = 'hb';
+  hb.style.cssText = 'position:fixed;top:8px;left:8px;color:#0f0;background:#000;padding:6px;font:12px monospace;z-index:9';
+  document.body.appendChild(hb);
+  hb.textContent = 'p458b ALIVE run k=' + k + ' boots=' + (parseInt(localStorage.getItem('p458boot') || '0', 10) + 1);
+  try { localStorage.setItem('p458boot', String(parseInt(localStorage.getItem('p458boot') || '0', 10) + 1)); } catch(e) {}
 
   window.onerror = function(msg) {
     B('ONERROR-' + encodeURIComponent(String(msg)).slice(0, 80));
@@ -100,6 +107,8 @@
           else if (s !== 'unloaded') { others++; }
         }
         B('F' + k + '-' + (flipped >= 0 ? 'FLIPPOS-' + flipped : 'NOFLIP'));
+        var hbu = document.getElementById('hb');
+        if (hbu) hbu.textContent = 'p458b k=' + k + ' -> ' + (flipped >= 0 ? 'FLIP@' + flipped : 'NOFLIP') + ' (reloading)';
         if (others) B('F' + k + '-ODDSTAT-' + others);
         setTimeout(reload, 2500);
       },
