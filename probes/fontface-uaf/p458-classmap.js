@@ -101,16 +101,21 @@
     void face.loaded;
     face.load().then(
       function() {
-        var flipped = -1, others = 0;
+        var flipped = -1, others = 0, extraFlips = [];
         for (var j = 0; j < jfaces.length; j++) {
           var s;
           try { s = jfaces[j].status; } catch(e) { s = 'THROW'; }
-          if (s === 'loaded') { flipped = j; }
+          if (s === 'loaded') {
+            if (flipped < 0) flipped = j; else extraFlips.push(j);
+          }
           else if (s !== 'unloaded') { others++; }
         }
         B('F' + k + '-' + (flipped >= 0 ? 'FLIPPOS-' + flipped : 'NOFLIP'));
         var hbu = document.getElementById('hb');
         if (hbu) hbu.textContent = 'p458b k=' + k + ' -> ' + (flipped >= 0 ? 'FLIP@' + flipped : 'NOFLIP') + ' (reloading)';
+        // anomaly telemetry: a multi-flip or odd status is a NEW confused
+        // effect, not noise — tag it so it surfaces in the stream itself
+        if (extraFlips.length) B('F' + k + '-MULTIFLIP-' + extraFlips.join(','));
         if (others) B('F' + k + '-ODDSTAT-' + others);
         setTimeout(reload, 2500);
       },
