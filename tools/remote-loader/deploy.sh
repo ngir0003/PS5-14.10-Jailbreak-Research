@@ -12,6 +12,7 @@ cp ../../probes/fontface-uaf/p447-spray-clients.js .
 cp ../../probes/fontface-uaf/p448-tight-spray.js .
 cp ../../probes/fontface-uaf/p449-multi-round.js .
 cp ../../probes/fontface-uaf/p450-unloaded-spray.js .
+cp ../../probes/fontface-uaf/p451-error-spray.js .
 
 echo "[*] Deployed:"
 ls -la fa-*.html index.html p445-fontface-uaf.js p162-deep-scan.js
