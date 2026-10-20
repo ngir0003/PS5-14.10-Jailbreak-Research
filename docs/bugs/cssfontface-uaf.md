@@ -112,3 +112,53 @@ Sequence on device: LOAD-0 -> THEN-1 (getter inside iterateClients) -> VR-1
 resolves. new FontFace() faces never crash (v1-v3, 235 clean triggers) —
 the CSSFontSelector client only attaches to CSS-created faces
 (CSSFontFace.cpp:100). Log: results/beacon-logs/v445-fontface-run4-crash.txt.
+
+## Stage 2 — groom, survival, and the live type-confusion hook (2026-10-20)
+
+### The groom recipe (p448/p450)
+
+Inside the `then` getter, synchronously on top of the freed client slot:
+1. remove the victim `<style>`, force layout (`document.body.offsetHeight`) — the free
+2. spray 120 x ( `@font-face` style element + text-sink div + `offsetHeight` per item )
+
+One allocation per free-list pop: LIFO serves the freed block to the first
+same-class allocation, and per-item forced layout is mandatory (p447's single
+batched layout at the end always died — 7/7). Raw ArrayBuffer marker bytes can
+never survive the confused virtual dispatch (p446, 18/18 deaths): offset 0 of
+the replacement must be a valid vtable. Failing-src spray (`local(Songti)`,
+p450/p451) is the most stable variant — 4/4 rounds per page, no DOM-growth
+degradation across rounds.
+
+### What the freed slot actually is
+
+The freed victim client is the JS `FontFace` wrapper (created when
+`document.fonts` enumeration wraps the CSS-created face). The spray lands a
+fresh `FontFace` wrapper on the slot, so the confused
+`client.fontLoaded(*this)` (CSSFontFace.cpp, `fontLoadEventOccurred`) is a
+same-class dispatch: it sets the wrong wrapper's status and resolves its
+`loaded` promise.
+
+### Observed on device (p451/p452)
+
+- p451 census: the flip lands on ONE sprayed face per run — 18/25 runs, and
+  only ever position near the head of the spray, never random.
+- p452 live hook: `.loaded.then` attached to all 120 sprayed faces after the
+  trigger. **28/28 runs (100%) exactly one promise fires** — `t1x30` x24,
+  `t1x34` x2, `t1x37` x2 — always `Sloaded`. The landing slot jitters by a
+  few spray positions (heap-layout run-to-run variance) but the flip itself
+  is fully reliable in this build.
+- Bonus signal: the flip's promise resolution resolves *with the FontFace
+  object itself*, whose thenable check re-reads `FontFace.prototype.then` —
+  our getter fires a second time (`THEN-2`), synchronous inside the confused
+  callback, inside `iterateClients`, inside the trigger's `setStatus`. A
+  controlled re-entry point into the corrupted loop.
+
+### Next: p453 — second-order escalation
+
+At `THEN-2` we are in JS while WebKit still holds the confused pointer.
+Remove the flipped face's style + force layout there to free the *replacement*
+wrapper, then steer what lands in the slot (different CSSFontFaceClient
+subclass — `CSSFontSelector::fontLoaded` vs `FontFace::fontLoaded` have
+wildly different bodies, and the callback's argument is the trigger CSSFontFace
+we control). Goal: aim the dispatch, then overlap with JS-controlled memory
+for addrof/fakeobj.
