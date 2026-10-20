@@ -93,14 +93,42 @@
         // means k is NOT in the class (or dispatch missed).
         B('MK' + k + '-SURVIVED');
         hb.textContent = 'p458-massclaim k=' + k + ' SURVIVED (reload)';
-        setTimeout(reload, 2500);
+        // memory hygiene: the PS5 browser process has a hard cap and
+        // reload churn without cleanup triggers the console's
+        // "not enough free system memory" error. Explicitly release
+        // everything we allocated before the next round, and cool down
+        // periodically so the system can reclaim.
+        cleanup();
+        var runs = 0;
+        try {
+          runs = (parseInt(localStorage.getItem('p458runs') || '0', 10) + 1) % 40;
+          localStorage.setItem('p458runs', String(runs));
+        } catch(e) {}
+        if (runs === 0) {
+          B('COOLDOWN-60s');
+          hb.textContent = 'p458-massclaim COOLDOWN 60s (mem)';
+          setTimeout(reload, 60000);
+        } else {
+          setTimeout(reload, 3000);
+        }
       },
       function(e) { B('MK' + k + '-NO-0-RELOAD'); setTimeout(reload, 2000); }
     );
   }
 
+  function cleanup() {
+    try {
+      var st = document.querySelectorAll('style');
+      for (var i = 0; i < st.length; i++) st[i].remove();
+      document.fonts.forEach(function(f) { try { document.fonts.delete(f); } catch(e) {} });
+    } catch(e) {}
+    bufs = null;
+  }
+
   function reload() {
-    location.replace('fa-v458-massclaim.html?r=' + Date.now());
+    location.replace(location.pathname.indexOf('massclaim') >= 0
+      ? 'fa-v458-massclaim.html?r=' + Date.now()
+      : 'fa-v458-massclaim.html?r=' + Date.now());
   }
 
   round0();
