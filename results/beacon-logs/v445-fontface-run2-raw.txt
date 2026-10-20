@@ -1,0 +1,324 @@
+
+   ┌────────────────────────────────────────────────────┐
+   │          PS5 WEBKIT REMOTE LOADER v0.1.1           │
+   │               PS5 User's Guide host                │
+   │               serving remote-loader                │
+   └────────────────────────────────────────────────────┘
+
+[+] Spoofing manuals.playstation.net -> 10.0.9.251
+    everything else gets NXDOMAIN (blocks PSN and update prompts)
+[+] Serving /Users/samuelngiri/Documents/projects/PS5-14.10-Jailbreak-Research/tools/remote-loader
+[+] DNS on UDP 53
+/Users/samuelngiri/Documents/projects/PS5-14.10-Jailbreak-Research/tools/remote-loader/host.py:721: DeprecationWarning: ssl.TLSVersion.TLSv1 is deprecated
+  ctx.minimum_version = ssl.TLSVersion.TLSv1
+[+] HTTPS on TCP 443 (self-signed)
+
+[+] Set the PS5 DNS to 10.0.9.251
+    Settings -> Network -> Settings -> Set Up Internet Connection
+    -> Set Up Manually -> DNS Settings -> Primary DNS
+
+[+] Waiting for the PS5. Open Settings -> User's Guide when ready.
+
+
+[+] PS5 is talking to us (DNS).
+    On the PS5: Settings -> User's Guide
+    If the DNS is not set yet, do that first:
+    Settings -> Network -> Settings -> Set Up Internet
+    Connection -> Set Up Manually -> DNS Settings
+
+[TLS ] handshake ok from 10.0.84.184: TLSv1.3 TLS_AES_256_GCM_SHA384
+[+] HTTPS request received.
+[HTTP] GET /document/gb/ps5/ -> 200  UA: Mozilla/5.0 (PlayStation; PlayStation 5/14.00) AppleWebKit/6
+
+[+] User's Guide document served.
+    The WebKit exploit should be running on the PS5 now.
+    It needs several attempts - reload the User's Guide if the
+    browser stalls.
+    
+    When you are done, set the PS5 DNS back to automatic,
+    otherwise it has no internet.
+
+[TLS ] handshake ok from 10.0.84.184: TLSv1.3 TLS_AES_256_GCM_SHA384
+[HTTP] GET /document/gb/ps5/fa-v445-fontface.html -> 200  UA: Mozilla/5.0 (PlayStation; PlayStation 5/14.00) AppleWebKit/6
+[TLS ] handshake ok from 10.0.84.184: TLSv1.3 TLS_AES_256_GCM_SHA384
+[HTTP] GET /document/gb/ps5/p445-fontface-uaf.js?v=445b -> 200  UA: Mozilla/5.0 (PlayStation; PlayStation 5/14.00) AppleWebKit/6
+[TLS ] handshake ok from 10.0.84.184: TLSv1.3 TLS_AES_256_GCM_SHA384
+[HTTP] GET /BEACON?V445-BOOT2&t=1792485130826 -> 404  UA: Mozilla/5.0 (PlayStation; PlayStation 5/14.00) AppleWebKit/6
+[TLS ] handshake ok from 10.0.84.184: TLSv1.3 TLS_AES_256_GCM_SHA384
+[HTTP] GET /BEACON?V445-GETTER-SET&t=1792485130826 -> 404  UA: Mozilla/5.0 (PlayStation; PlayStation 5/14.00) AppleWebKit/6
+[TLS ] handshake ok from 10.0.84.184: TLSv1.3 TLS_AES_256_GCM_SHA384
+[HTTP] GET /BEACON?V445-OK-0-H1&t=1792485130831 -> 404  UA: Mozilla/5.0 (PlayStation; PlayStation 5/14.00) AppleWebKit/6
+[TLS ] handshake ok from 10.0.84.184: TLSv1.3 TLS_AES_256_GCM_SHA384
+[HTTP] GET /BEACON?V445-R0-face-rule&t=1792485130826 -> 404  UA: Mozilla/5.0 (PlayStation; PlayStation 5/14.00) AppleWebKit/6
+[TLS ] handshake ok from 10.0.84.184: TLSv1.3 TLS_AES_256_GCM_SHA384
+[HTTP] GET /BEACON?V445-THEN-1-face-rule&t=1792485130830 -> 404  UA: Mozilla/5.0 (PlayStation; PlayStation 5/14.00) AppleWebKit/6
+[TLS ] handshake ok from 10.0.84.184: TLSv1.3 TLS_AES_256_GCM_SHA384
+[HTTP] GET /BEACON?V445-REMOVED-face-rule&t=1792485130831 -> 404  UA: Mozilla/5.0 (PlayStation; PlayStation 5/14.00) AppleWebKit/6
+[TLS ] handshake ok from 10.0.84.184: TLSv1.3 TLS_AES_256_GCM_SHA384
+[HTTP] GET /BEACON?V445-R1-use-rule&t=1792485131431 -> 404  UA: Mozilla/5.0 (PlayStation; PlayStation 5/14.00) AppleWebKit/6
+[TLS ] handshake ok from 10.0.84.184: TLSv1.3 TLS_AES_256_GCM_SHA384
+[HTTP] GET /BEACON?V445-THEN-2-use-rule&t=1792485131433 -> 404  UA: Mozilla/5.0 (PlayStation; PlayStation 5/14.00) AppleWebKit/6
+[TLS ] handshake ok from 10.0.84.184: TLSv1.3 TLS_AES_256_GCM_SHA384
+[HTTP] GET /BEACON?V445-REMOVED-use-rule&t=1792485131433 -> 404  UA: Mozilla/5.0 (PlayStation; PlayStation 5/14.00) AppleWebKit/6
+[TLS ] handshake ok from 10.0.84.184: TLSv1.3 TLS_AES_256_GCM_SHA384
+[HTTP] GET /BEACON?V445-OK-1-H2&t=1792485131433 -> 404  UA: Mozilla/5.0 (PlayStation; PlayStation 5/14.00) AppleWebKit/6
+[TLS ] handshake ok from 10.0.84.184: TLSv1.3 TLS_AES_256_GCM_SHA384
+[HTTP] GET /BEACON?V445-R2-canvas-lookup&t=1792485132033 -> 404  UA: Mozilla/5.0 (PlayStation; PlayStation 5/14.00) AppleWebKit/6
+[TLS ] handshake ok from 10.0.84.184: TLSv1.3 TLS_AES_256_GCM_SHA384
+[HTTP] GET /BEACON?V445-CANVAS-W18&t=1792485132036 -> 404  UA: Mozilla/5.0 (PlayStation; PlayStation 5/14.00) AppleWebKit/6
+[TLS ] handshake ok from 10.0.84.184: TLSv1.3 TLS_AES_256_GCM_SHA384
+[HTTP] GET /BEACON?V445-THEN-3-canvas-lookup&t=1792485132036 -> 404  UA: Mozilla/5.0 (PlayStation; PlayStation 5/14.00) AppleWebKit/6
+[TLS ] handshake ok from 10.0.84.184: TLSv1.3 TLS_AES_256_GCM_SHA384
+[HTTP] GET /BEACON?V445-REMOVED-canvas-lookup&t=1792485132037 -> 404  UA: Mozilla/5.0 (PlayStation; PlayStation 5/14.00) AppleWebKit/6
+[TLS ] handshake ok from 10.0.84.184: TLSv1.3 TLS_AES_256_GCM_SHA384
+[HTTP] GET /BEACON?V445-OK-2-H3&t=1792485132037 -> 404  UA: Mozilla/5.0 (PlayStation; PlayStation 5/14.00) AppleWebKit/6
+[TLS ] handshake ok from 10.0.84.184: TLSv1.3 TLS_AES_256_GCM_SHA384
+[HTTP] GET /BEACON?V445-R3-unicode-range&t=1792485132637 -> 404  UA: Mozilla/5.0 (PlayStation; PlayStation 5/14.00) AppleWebKit/6
+[TLS ] handshake ok from 10.0.84.184: TLSv1.3 TLS_AES_256_GCM_SHA384
+[HTTP] GET /BEACON?V445-THEN-4-unicode-range&t=1792485132638 -> 404  UA: Mozilla/5.0 (PlayStation; PlayStation 5/14.00) AppleWebKit/6
+[TLS ] handshake ok from 10.0.84.184: TLSv1.3 TLS_AES_256_GCM_SHA384
+[HTTP] GET /BEACON?V445-REMOVED-unicode-range&t=1792485132639 -> 404  UA: Mozilla/5.0 (PlayStation; PlayStation 5/14.00) AppleWebKit/6
+[TLS ] handshake ok from 10.0.84.184: TLSv1.3 TLS_AES_256_GCM_SHA384
+[HTTP] GET /BEACON?V445-OK-3-H4&t=1792485132639 -> 404  UA: Mozilla/5.0 (PlayStation; PlayStation 5/14.00) AppleWebKit/6
+[TLS ] handshake ok from 10.0.84.184: TLSv1.3 TLS_AES_256_GCM_SHA384
+[HTTP] GET /BEACON?V445-R4-face-rule&t=1792485133239 -> 404  UA: Mozilla/5.0 (PlayStation; PlayStation 5/14.00) AppleWebKit/6
+[TLS ] handshake ok from 10.0.84.184: TLSv1.3 TLS_AES_256_GCM_SHA384
+[HTTP] GET /BEACON?V445-THEN-5-face-rule&t=1792485133241 -> 404  UA: Mozilla/5.0 (PlayStation; PlayStation 5/14.00) AppleWebKit/6
+[TLS ] handshake ok from 10.0.84.184: TLSv1.3 TLS_AES_256_GCM_SHA384
+[HTTP] GET /BEACON?V445-REMOVED-face-rule&t=1792485133241 -> 404  UA: Mozilla/5.0 (PlayStation; PlayStation 5/14.00) AppleWebKit/6
+[TLS ] handshake ok from 10.0.84.184: TLSv1.3 TLS_AES_256_GCM_SHA384
+[HTTP] GET /BEACON?V445-OK-4-H5&t=1792485133241 -> 404  UA: Mozilla/5.0 (PlayStation; PlayStation 5/14.00) AppleWebKit/6
+[TLS ] handshake ok from 10.0.84.184: TLSv1.3 TLS_AES_256_GCM_SHA384
+[HTTP] GET /BEACON?V445-R5-use-rule&t=1792485133841 -> 404  UA: Mozilla/5.0 (PlayStation; PlayStation 5/14.00) AppleWebKit/6
+[TLS ] handshake ok from 10.0.84.184: TLSv1.3 TLS_AES_256_GCM_SHA384
+[HTTP] GET /BEACON?V445-THEN-6-use-rule&t=1792485133843 -> 404  UA: Mozilla/5.0 (PlayStation; PlayStation 5/14.00) AppleWebKit/6
+[TLS ] handshake ok from 10.0.84.184: TLSv1.3 TLS_AES_256_GCM_SHA384
+[HTTP] GET /BEACON?V445-REMOVED-use-rule&t=1792485133843 -> 404  UA: Mozilla/5.0 (PlayStation; PlayStation 5/14.00) AppleWebKit/6
+[TLS ] handshake ok from 10.0.84.184: TLSv1.3 TLS_AES_256_GCM_SHA384
+[HTTP] GET /BEACON?V445-OK-5-H6&t=1792485133843 -> 404  UA: Mozilla/5.0 (PlayStation; PlayStation 5/14.00) AppleWebKit/6
+[TLS ] handshake ok from 10.0.84.184: TLSv1.3 TLS_AES_256_GCM_SHA384
+[HTTP] GET /BEACON?V445-R6-canvas-lookup&t=1792485134444 -> 404  UA: Mozilla/5.0 (PlayStation; PlayStation 5/14.00) AppleWebKit/6
+[TLS ] handshake ok from 10.0.84.184: TLSv1.3 TLS_AES_256_GCM_SHA384
+[HTTP] GET /BEACON?V445-CANVAS-W18&t=1792485134445 -> 404  UA: Mozilla/5.0 (PlayStation; PlayStation 5/14.00) AppleWebKit/6
+[TLS ] handshake ok from 10.0.84.184: TLSv1.3 TLS_AES_256_GCM_SHA384
+[HTTP] GET /BEACON?V445-THEN-7-canvas-lookup&t=1792485134445 -> 404  UA: Mozilla/5.0 (PlayStation; PlayStation 5/14.00) AppleWebKit/6
+[TLS ] handshake ok from 10.0.84.184: TLSv1.3 TLS_AES_256_GCM_SHA384
+[HTTP] GET /BEACON?V445-REMOVED-canvas-lookup&t=1792485134446 -> 404  UA: Mozilla/5.0 (PlayStation; PlayStation 5/14.00) AppleWebKit/6
+[TLS ] handshake ok from 10.0.84.184: TLSv1.3 TLS_AES_256_GCM_SHA384
+[HTTP] GET /BEACON?V445-OK-6-H7&t=1792485134446 -> 404  UA: Mozilla/5.0 (PlayStation; PlayStation 5/14.00) AppleWebKit/6
+[TLS ] handshake ok from 10.0.84.184: TLSv1.3 TLS_AES_256_GCM_SHA384
+[HTTP] GET /BEACON?V445-R7-unicode-range&t=1792485135046 -> 404  UA: Mozilla/5.0 (PlayStation; PlayStation 5/14.00) AppleWebKit/6
+[TLS ] handshake ok from 10.0.84.184: TLSv1.3 TLS_AES_256_GCM_SHA384
+[HTTP] GET /BEACON?V445-THEN-8-unicode-range&t=1792485135048 -> 404  UA: Mozilla/5.0 (PlayStation; PlayStation 5/14.00) AppleWebKit/6
+[TLS ] handshake ok from 10.0.84.184: TLSv1.3 TLS_AES_256_GCM_SHA384
+[HTTP] GET /BEACON?V445-REMOVED-unicode-range&t=1792485135048 -> 404  UA: Mozilla/5.0 (PlayStation; PlayStation 5/14.00) AppleWebKit/6
+[TLS ] handshake ok from 10.0.84.184: TLSv1.3 TLS_AES_256_GCM_SHA384
+[HTTP] GET /BEACON?V445-OK-7-H8&t=1792485135048 -> 404  UA: Mozilla/5.0 (PlayStation; PlayStation 5/14.00) AppleWebKit/6
+[TLS ] handshake ok from 10.0.84.184: TLSv1.3 TLS_AES_256_GCM_SHA384
+[HTTP] GET /BEACON?V445-R8-face-rule&t=1792485135648 -> 404  UA: Mozilla/5.0 (PlayStation; PlayStation 5/14.00) AppleWebKit/6
+[TLS ] handshake ok from 10.0.84.184: TLSv1.3 TLS_AES_256_GCM_SHA384
+[HTTP] GET /BEACON?V445-THEN-9-face-rule&t=1792485135650 -> 404  UA: Mozilla/5.0 (PlayStation; PlayStation 5/14.00) AppleWebKit/6
+[TLS ] handshake ok from 10.0.84.184: TLSv1.3 TLS_AES_256_GCM_SHA384
+[HTTP] GET /BEACON?V445-REMOVED-face-rule&t=1792485135651 -> 404  UA: Mozilla/5.0 (PlayStation; PlayStation 5/14.00) AppleWebKit/6
+[TLS ] handshake ok from 10.0.84.184: TLSv1.3 TLS_AES_256_GCM_SHA384
+[HTTP] GET /BEACON?V445-OK-8-H9&t=1792485135652 -> 404  UA: Mozilla/5.0 (PlayStation; PlayStation 5/14.00) AppleWebKit/6
+[TLS ] handshake ok from 10.0.84.184: TLSv1.3 TLS_AES_256_GCM_SHA384
+[HTTP] GET /BEACON?V445-R9-use-rule&t=1792485136252 -> 404  UA: Mozilla/5.0 (PlayStation; PlayStation 5/14.00) AppleWebKit/6
+[TLS ] handshake ok from 10.0.84.184: TLSv1.3 TLS_AES_256_GCM_SHA384
+[HTTP] GET /BEACON?V445-THEN-10-use-rule&t=1792485136253 -> 404  UA: Mozilla/5.0 (PlayStation; PlayStation 5/14.00) AppleWebKit/6
+[TLS ] handshake ok from 10.0.84.184: TLSv1.3 TLS_AES_256_GCM_SHA384
+[HTTP] GET /BEACON?V445-REMOVED-use-rule&t=1792485136254 -> 404  UA: Mozilla/5.0 (PlayStation; PlayStation 5/14.00) AppleWebKit/6
+[TLS ] handshake ok from 10.0.84.184: TLSv1.3 TLS_AES_256_GCM_SHA384
+[HTTP] GET /BEACON?V445-OK-9-H10&t=1792485136254 -> 404  UA: Mozilla/5.0 (PlayStation; PlayStation 5/14.00) AppleWebKit/6
+[TLS ] handshake ok from 10.0.84.184: TLSv1.3 TLS_AES_256_GCM_SHA384
+[HTTP] GET /BEACON?V445-R10-canvas-lookup&t=1792485136854 -> 404  UA: Mozilla/5.0 (PlayStation; PlayStation 5/14.00) AppleWebKit/6
+[TLS ] handshake ok from 10.0.84.184: TLSv1.3 TLS_AES_256_GCM_SHA384
+[HTTP] GET /BEACON?V445-CANVAS-W18&t=1792485136855 -> 404  UA: Mozilla/5.0 (PlayStation; PlayStation 5/14.00) AppleWebKit/6
+[TLS ] handshake ok from 10.0.84.184: TLSv1.3 TLS_AES_256_GCM_SHA384
+[HTTP] GET /BEACON?V445-THEN-11-canvas-lookup&t=1792485136856 -> 404  UA: Mozilla/5.0 (PlayStation; PlayStation 5/14.00) AppleWebKit/6
+[TLS ] handshake ok from 10.0.84.184: TLSv1.3 TLS_AES_256_GCM_SHA384
+[HTTP] GET /BEACON?V445-REMOVED-canvas-lookup&t=1792485136856 -> 404  UA: Mozilla/5.0 (PlayStation; PlayStation 5/14.00) AppleWebKit/6
+[TLS ] handshake ok from 10.0.84.184: TLSv1.3 TLS_AES_256_GCM_SHA384
+[HTTP] GET /BEACON?V445-OK-10-H11&t=1792485136857 -> 404  UA: Mozilla/5.0 (PlayStation; PlayStation 5/14.00) AppleWebKit/6
+[TLS ] handshake ok from 10.0.84.184: TLSv1.3 TLS_AES_256_GCM_SHA384
+[HTTP] GET /BEACON?V445-R11-unicode-range&t=1792485137457 -> 404  UA: Mozilla/5.0 (PlayStation; PlayStation 5/14.00) AppleWebKit/6
+[TLS ] handshake ok from 10.0.84.184: TLSv1.3 TLS_AES_256_GCM_SHA384
+[HTTP] GET /BEACON?V445-THEN-12-unicode-range&t=1792485137458 -> 404  UA: Mozilla/5.0 (PlayStation; PlayStation 5/14.00) AppleWebKit/6
+[TLS ] handshake ok from 10.0.84.184: TLSv1.3 TLS_AES_256_GCM_SHA384
+[HTTP] GET /BEACON?V445-REMOVED-unicode-range&t=1792485137459 -> 404  UA: Mozilla/5.0 (PlayStation; PlayStation 5/14.00) AppleWebKit/6
+[TLS ] handshake ok from 10.0.84.184: TLSv1.3 TLS_AES_256_GCM_SHA384
+[HTTP] GET /BEACON?V445-OK-11-H12&t=1792485137459 -> 404  UA: Mozilla/5.0 (PlayStation; PlayStation 5/14.00) AppleWebKit/6
+[TLS ] handshake ok from 10.0.84.184: TLSv1.3 TLS_AES_256_GCM_SHA384
+[HTTP] GET /BEACON?V445-PHASE2&t=1792485138059 -> 404  UA: Mozilla/5.0 (PlayStation; PlayStation 5/14.00) AppleWebKit/6
+[TLS ] handshake ok from 10.0.84.184: TLSv1.3 TLS_AES_256_GCM_SHA384
+[HTTP] GET /BEACON?V445-R0-face-rule&t=1792485138060 -> 404  UA: Mozilla/5.0 (PlayStation; PlayStation 5/14.00) AppleWebKit/6
+[TLS ] handshake ok from 10.0.84.184: TLSv1.3 TLS_AES_256_GCM_SHA384
+[HTTP] GET /BEACON?V445-THEN-13-face-rule&t=1792485138061 -> 404  UA: Mozilla/5.0 (PlayStation; PlayStation 5/14.00) AppleWebKit/6
+[TLS ] handshake ok from 10.0.84.184: TLSv1.3 TLS_AES_256_GCM_SHA384
+[HTTP] GET /BEACON?V445-REMOVED-face-rule&t=1792485138062 -> 404  UA: Mozilla/5.0 (PlayStation; PlayStation 5/14.00) AppleWebKit/6
+[TLS ] handshake ok from 10.0.84.184: TLSv1.3 TLS_AES_256_GCM_SHA384
+[HTTP] GET /BEACON?V445-OK-0-H13&t=1792485138062 -> 404  UA: Mozilla/5.0 (PlayStation; PlayStation 5/14.00) AppleWebKit/6
+[TLS ] handshake ok from 10.0.84.184: TLSv1.3 TLS_AES_256_GCM_SHA384
+[HTTP] GET /BEACON?V445-R1-use-rule&t=1792485138212 -> 404  UA: Mozilla/5.0 (PlayStation; PlayStation 5/14.00) AppleWebKit/6
+[TLS ] handshake ok from 10.0.84.184: TLSv1.3 TLS_AES_256_GCM_SHA384
+[HTTP] GET /BEACON?V445-THEN-14-use-rule&t=1792485138214 -> 404  UA: Mozilla/5.0 (PlayStation; PlayStation 5/14.00) AppleWebKit/6
+[TLS ] handshake ok from 10.0.84.184: TLSv1.3 TLS_AES_256_GCM_SHA384
+[HTTP] GET /BEACON?V445-OK-1-H14&t=1792485138215 -> 404  UA: Mozilla/5.0 (PlayStation; PlayStation 5/14.00) AppleWebKit/6
+[TLS ] handshake ok from 10.0.84.184: TLSv1.3 TLS_AES_256_GCM_SHA384
+[HTTP] GET /BEACON?V445-REMOVED-use-rule&t=1792485138215 -> 404  UA: Mozilla/5.0 (PlayStation; PlayStation 5/14.00) AppleWebKit/6
+[TLS ] handshake ok from 10.0.84.184: TLSv1.3 TLS_AES_256_GCM_SHA384
+[HTTP] GET /BEACON?V445-R2-canvas-lookup&t=1792485138365 -> 404  UA: Mozilla/5.0 (PlayStation; PlayStation 5/14.00) AppleWebKit/6
+[TLS ] handshake ok from 10.0.84.184: TLSv1.3 TLS_AES_256_GCM_SHA384
+[HTTP] GET /BEACON?V445-CANVAS-W18&t=1792485138366 -> 404  UA: Mozilla/5.0 (PlayStation; PlayStation 5/14.00) AppleWebKit/6
+[TLS ] handshake ok from 10.0.84.184: TLSv1.3 TLS_AES_256_GCM_SHA384
+[HTTP] GET /BEACON?V445-THEN-15-canvas-lookup&t=1792485138367 -> 404  UA: Mozilla/5.0 (PlayStation; PlayStation 5/14.00) AppleWebKit/6
+[TLS ] handshake ok from 10.0.84.184: TLSv1.3 TLS_AES_256_GCM_SHA384
+[HTTP] GET /BEACON?V445-REMOVED-canvas-lookup&t=1792485138368 -> 404  UA: Mozilla/5.0 (PlayStation; PlayStation 5/14.00) AppleWebKit/6
+[TLS ] handshake ok from 10.0.84.184: TLSv1.3 TLS_AES_256_GCM_SHA384
+[HTTP] GET /BEACON?V445-OK-2-H15&t=1792485138368 -> 404  UA: Mozilla/5.0 (PlayStation; PlayStation 5/14.00) AppleWebKit/6
+[TLS ] handshake ok from 10.0.84.184: TLSv1.3 TLS_AES_256_GCM_SHA384
+[HTTP] GET /BEACON?V445-R3-unicode-range&t=1792485138518 -> 404  UA: Mozilla/5.0 (PlayStation; PlayStation 5/14.00) AppleWebKit/6
+[TLS ] handshake ok from 10.0.84.184: TLSv1.3 TLS_AES_256_GCM_SHA384
+[HTTP] GET /BEACON?V445-THEN-16-unicode-range&t=1792485138520 -> 404  UA: Mozilla/5.0 (PlayStation; PlayStation 5/14.00) AppleWebKit/6
+[TLS ] handshake ok from 10.0.84.184: TLSv1.3 TLS_AES_256_GCM_SHA384
+[HTTP] GET /BEACON?V445-REMOVED-unicode-range&t=1792485138521 -> 404  UA: Mozilla/5.0 (PlayStation; PlayStation 5/14.00) AppleWebKit/6
+[TLS ] handshake ok from 10.0.84.184: TLSv1.3 TLS_AES_256_GCM_SHA384
+[HTTP] GET /BEACON?V445-OK-3-H16&t=1792485138521 -> 404  UA: Mozilla/5.0 (PlayStation; PlayStation 5/14.00) AppleWebKit/6
+[TLS ] handshake ok from 10.0.84.184: TLSv1.3 TLS_AES_256_GCM_SHA384
+[HTTP] GET /BEACON?V445-R4-face-rule&t=1792485138671 -> 404  UA: Mozilla/5.0 (PlayStation; PlayStation 5/14.00) AppleWebKit/6
+[TLS ] handshake ok from 10.0.84.184: TLSv1.3 TLS_AES_256_GCM_SHA384
+[HTTP] GET /BEACON?V445-THEN-17-face-rule&t=1792485138675 -> 404  UA: Mozilla/5.0 (PlayStation; PlayStation 5/14.00) AppleWebKit/6
+[TLS ] handshake ok from 10.0.84.184: TLSv1.3 TLS_AES_256_GCM_SHA384
+[HTTP] GET /BEACON?V445-REMOVED-face-rule&t=1792485138676 -> 404  UA: Mozilla/5.0 (PlayStation; PlayStation 5/14.00) AppleWebKit/6
+[TLS ] handshake ok from 10.0.84.184: TLSv1.3 TLS_AES_256_GCM_SHA384
+[HTTP] GET /BEACON?V445-OK-4-H17&t=1792485138676 -> 404  UA: Mozilla/5.0 (PlayStation; PlayStation 5/14.00) AppleWebKit/6
+[TLS ] handshake ok from 10.0.84.184: TLSv1.3 TLS_AES_256_GCM_SHA384
+[HTTP] GET /BEACON?V445-R5-use-rule&t=1792485138827 -> 404  UA: Mozilla/5.0 (PlayStation; PlayStation 5/14.00) AppleWebKit/6
+[TLS ] handshake ok from 10.0.84.184: TLSv1.3 TLS_AES_256_GCM_SHA384
+[HTTP] GET /BEACON?V445-THEN-18-use-rule&t=1792485138828 -> 404  UA: Mozilla/5.0 (PlayStation; PlayStation 5/14.00) AppleWebKit/6
+[TLS ] handshake ok from 10.0.84.184: TLSv1.3 TLS_AES_256_GCM_SHA384
+[HTTP] GET /BEACON?V445-REMOVED-use-rule&t=1792485138829 -> 404  UA: Mozilla/5.0 (PlayStation; PlayStation 5/14.00) AppleWebKit/6
+[TLS ] handshake ok from 10.0.84.184: TLSv1.3 TLS_AES_256_GCM_SHA384
+[HTTP] GET /BEACON?V445-OK-5-H18&t=1792485138829 -> 404  UA: Mozilla/5.0 (PlayStation; PlayStation 5/14.00) AppleWebKit/6
+[TLS ] handshake ok from 10.0.84.184: TLSv1.3 TLS_AES_256_GCM_SHA384
+[HTTP] GET /BEACON?V445-R6-canvas-lookup&t=1792485138980 -> 404  UA: Mozilla/5.0 (PlayStation; PlayStation 5/14.00) AppleWebKit/6
+[TLS ] handshake ok from 10.0.84.184: TLSv1.3 TLS_AES_256_GCM_SHA384
+[HTTP] GET /BEACON?V445-OK-6-H19&t=1792485138983 -> 404  UA: Mozilla/5.0 (PlayStation; PlayStation 5/14.00) AppleWebKit/6
+[TLS ] handshake ok from 10.0.84.184: TLSv1.3 TLS_AES_256_GCM_SHA384
+[HTTP] GET /BEACON?V445-CANVAS-W18&t=1792485138981 -> 404  UA: Mozilla/5.0 (PlayStation; PlayStation 5/14.00) AppleWebKit/6
+[TLS ] handshake ok from 10.0.84.184: TLSv1.3 TLS_AES_256_GCM_SHA384
+[HTTP] GET /BEACON?V445-REMOVED-canvas-lookup&t=1792485138982 -> 404  UA: Mozilla/5.0 (PlayStation; PlayStation 5/14.00) AppleWebKit/6
+[TLS ] handshake ok from 10.0.84.184: TLSv1.3 TLS_AES_256_GCM_SHA384
+[HTTP] GET /BEACON?V445-R7-unicode-range&t=1792485139133 -> 404  UA: Mozilla/5.0 (PlayStation; PlayStation 5/14.00) AppleWebKit/6
+[TLS ] handshake ok from 10.0.84.184: TLSv1.3 TLS_AES_256_GCM_SHA384
+[HTTP] GET /BEACON?V445-THEN-20-unicode-range&t=1792485139135 -> 404  UA: Mozilla/5.0 (PlayStation; PlayStation 5/14.00) AppleWebKit/6
+[TLS ] handshake ok from 10.0.84.184: TLSv1.3 TLS_AES_256_GCM_SHA384
+[HTTP] GET /BEACON?V445-THEN-19-canvas-lookup&t=1792485138982 -> 404  UA: Mozilla/5.0 (PlayStation; PlayStation 5/14.00) AppleWebKit/6
+[TLS ] handshake ok from 10.0.84.184: TLSv1.3 TLS_AES_256_GCM_SHA384
+[HTTP] GET /BEACON?V445-OK-7-H20&t=1792485139136 -> 404  UA: Mozilla/5.0 (PlayStation; PlayStation 5/14.00) AppleWebKit/6
+[TLS ] handshake ok from 10.0.84.184: TLSv1.3 TLS_AES_256_GCM_SHA384
+[HTTP] GET /BEACON?V445-REMOVED-unicode-range&t=1792485139136 -> 404  UA: Mozilla/5.0 (PlayStation; PlayStation 5/14.00) AppleWebKit/6
+[TLS ] handshake ok from 10.0.84.184: TLSv1.3 TLS_AES_256_GCM_SHA384
+[HTTP] GET /BEACON?V445-R8-face-rule&t=1792485139286 -> 404  UA: Mozilla/5.0 (PlayStation; PlayStation 5/14.00) AppleWebKit/6
+[TLS ] handshake ok from 10.0.84.184: TLSv1.3 TLS_AES_256_GCM_SHA384
+[HTTP] GET /BEACON?V445-THEN-21-face-rule&t=1792485139288 -> 404  UA: Mozilla/5.0 (PlayStation; PlayStation 5/14.00) AppleWebKit/6
+[TLS ] handshake ok from 10.0.84.184: TLSv1.3 TLS_AES_256_GCM_SHA384
+[HTTP] GET /BEACON?V445-REMOVED-face-rule&t=1792485139289 -> 404  UA: Mozilla/5.0 (PlayStation; PlayStation 5/14.00) AppleWebKit/6
+[TLS ] handshake ok from 10.0.84.184: TLSv1.3 TLS_AES_256_GCM_SHA384
+[HTTP] GET /BEACON?V445-OK-8-H21&t=1792485139289 -> 404  UA: Mozilla/5.0 (PlayStation; PlayStation 5/14.00) AppleWebKit/6
+[TLS ] handshake ok from 10.0.84.184: TLSv1.3 TLS_AES_256_GCM_SHA384
+[HTTP] GET /BEACON?V445-R9-use-rule&t=1792485139439 -> 404  UA: Mozilla/5.0 (PlayStation; PlayStation 5/14.00) AppleWebKit/6
+[TLS ] handshake ok from 10.0.84.184: TLSv1.3 TLS_AES_256_GCM_SHA384
+[HTTP] GET /BEACON?V445-THEN-22-use-rule&t=1792485139441 -> 404  UA: Mozilla/5.0 (PlayStation; PlayStation 5/14.00) AppleWebKit/6
+[TLS ] handshake ok from 10.0.84.184: TLSv1.3 TLS_AES_256_GCM_SHA384
+[HTTP] GET /BEACON?V445-OK-9-H22&t=1792485139442 -> 404  UA: Mozilla/5.0 (PlayStation; PlayStation 5/14.00) AppleWebKit/6
+[TLS ] handshake ok from 10.0.84.184: TLSv1.3 TLS_AES_256_GCM_SHA384
+[HTTP] GET /BEACON?V445-CANVAS-W18&t=1792485139593 -> 404  UA: Mozilla/5.0 (PlayStation; PlayStation 5/14.00) AppleWebKit/6
+[TLS ] handshake ok from 10.0.84.184: TLSv1.3 TLS_AES_256_GCM_SHA384
+[HTTP] GET /BEACON?V445-REMOVED-use-rule&t=1792485139442 -> 404  UA: Mozilla/5.0 (PlayStation; PlayStation 5/14.00) AppleWebKit/6
+[TLS ] handshake ok from 10.0.84.184: TLSv1.3 TLS_AES_256_GCM_SHA384
+[HTTP] GET /BEACON?V445-THEN-23-canvas-lookup&t=1792485139594 -> 404  UA: Mozilla/5.0 (PlayStation; PlayStation 5/14.00) AppleWebKit/6
+[TLS ] handshake ok from 10.0.84.184: TLSv1.3 TLS_AES_256_GCM_SHA384
+[HTTP] GET /BEACON?V445-OK-10-H23&t=1792485139595 -> 404  UA: Mozilla/5.0 (PlayStation; PlayStation 5/14.00) AppleWebKit/6
+[TLS ] handshake ok from 10.0.84.184: TLSv1.3 TLS_AES_256_GCM_SHA384
+[HTTP] GET /BEACON?V445-REMOVED-canvas-lookup&t=1792485139595 -> 404  UA: Mozilla/5.0 (PlayStation; PlayStation 5/14.00) AppleWebKit/6
+[TLS ] handshake ok from 10.0.84.184: TLSv1.3 TLS_AES_256_GCM_SHA384
+[HTTP] GET /BEACON?V445-R10-canvas-lookup&t=1792485139592 -> 404  UA: Mozilla/5.0 (PlayStation; PlayStation 5/14.00) AppleWebKit/6
+[TLS ] handshake ok from 10.0.84.184: TLSv1.3 TLS_AES_256_GCM_SHA384
+[HTTP] GET /BEACON?V445-R11-unicode-range&t=1792485139745 -> 404  UA: Mozilla/5.0 (PlayStation; PlayStation 5/14.00) AppleWebKit/6
+[TLS ] handshake ok from 10.0.84.184: TLSv1.3 TLS_AES_256_GCM_SHA384
+[HTTP] GET /BEACON?V445-REMOVED-unicode-range&t=1792485139748 -> 404  UA: Mozilla/5.0 (PlayStation; PlayStation 5/14.00) AppleWebKit/6
+[TLS ] handshake ok from 10.0.84.184: TLSv1.3 TLS_AES_256_GCM_SHA384
+[HTTP] GET /BEACON?V445-OK-11-H24&t=1792485139748 -> 404  UA: Mozilla/5.0 (PlayStation; PlayStation 5/14.00) AppleWebKit/6
+[TLS ] handshake ok from 10.0.84.184: TLSv1.3 TLS_AES_256_GCM_SHA384
+[HTTP] GET /BEACON?V445-THEN-24-unicode-range&t=1792485139747 -> 404  UA: Mozilla/5.0 (PlayStation; PlayStation 5/14.00) AppleWebKit/6
+[TLS ] handshake ok from 10.0.84.184: TLSv1.3 TLS_AES_256_GCM_SHA384
+[HTTP] GET /BEACON?V445-R12-face-rule&t=1792485139898 -> 404  UA: Mozilla/5.0 (PlayStation; PlayStation 5/14.00) AppleWebKit/6
+[TLS ] handshake ok from 10.0.84.184: TLSv1.3 TLS_AES_256_GCM_SHA384
+[HTTP] GET /BEACON?V445-THEN-25-face-rule&t=1792485139900 -> 404  UA: Mozilla/5.0 (PlayStation; PlayStation 5/14.00) AppleWebKit/6
+[TLS ] handshake ok from 10.0.84.184: TLSv1.3 TLS_AES_256_GCM_SHA384
+[HTTP] GET /BEACON?V445-OK-12-H25&t=1792485139901 -> 404  UA: Mozilla/5.0 (PlayStation; PlayStation 5/14.00) AppleWebKit/6
+[TLS ] handshake ok from 10.0.84.184: TLSv1.3 TLS_AES_256_GCM_SHA384
+[HTTP] GET /BEACON?V445-REMOVED-face-rule&t=1792485139901 -> 404  UA: Mozilla/5.0 (PlayStation; PlayStation 5/14.00) AppleWebKit/6
+[TLS ] handshake ok from 10.0.84.184: TLSv1.3 TLS_AES_256_GCM_SHA384
+[HTTP] GET /BEACON?V445-R13-use-rule&t=1792485140051 -> 404  UA: Mozilla/5.0 (PlayStation; PlayStation 5/14.00) AppleWebKit/6
+[TLS ] handshake ok from 10.0.84.184: TLSv1.3 TLS_AES_256_GCM_SHA384
+[HTTP] GET /BEACON?V445-THEN-26-use-rule&t=1792485140053 -> 404  UA: Mozilla/5.0 (PlayStation; PlayStation 5/14.00) AppleWebKit/6
+[TLS ] handshake ok from 10.0.84.184: TLSv1.3 TLS_AES_256_GCM_SHA384
+[HTTP] GET /BEACON?V445-REMOVED-use-rule&t=1792485140055 -> 404  UA: Mozilla/5.0 (PlayStation; PlayStation 5/14.00) AppleWebKit/6
+[TLS ] handshake ok from 10.0.84.184: TLSv1.3 TLS_AES_256_GCM_SHA384
+[HTTP] GET /BEACON?V445-OK-13-H26&t=1792485140055 -> 404  UA: Mozilla/5.0 (PlayStation; PlayStation 5/14.00) AppleWebKit/6
+[TLS ] handshake ok from 10.0.84.184: TLSv1.3 TLS_AES_256_GCM_SHA384
+[HTTP] GET /BEACON?V445-R14-canvas-lookup&t=1792485140205 -> 404  UA: Mozilla/5.0 (PlayStation; PlayStation 5/14.00) AppleWebKit/6
+[TLS ] handshake ok from 10.0.84.184: TLSv1.3 TLS_AES_256_GCM_SHA384
+[HTTP] GET /BEACON?V445-CANVAS-W18&t=1792485140207 -> 404  UA: Mozilla/5.0 (PlayStation; PlayStation 5/14.00) AppleWebKit/6
+[TLS ] handshake ok from 10.0.84.184: TLSv1.3 TLS_AES_256_GCM_SHA384
+[HTTP] GET /BEACON?V445-OK-14-H27&t=1792485140210 -> 404  UA: Mozilla/5.0 (PlayStation; PlayStation 5/14.00) AppleWebKit/6
+[TLS ] handshake ok from 10.0.84.184: TLSv1.3 TLS_AES_256_GCM_SHA384
+[HTTP] GET /BEACON?V445-THEN-27-canvas-lookup&t=1792485140208 -> 404  UA: Mozilla/5.0 (PlayStation; PlayStation 5/14.00) AppleWebKit/6
+[TLS ] handshake ok from 10.0.84.184: TLSv1.3 TLS_AES_256_GCM_SHA384
+[HTTP] GET /BEACON?V445-REMOVED-canvas-lookup&t=1792485140210 -> 404  UA: Mozilla/5.0 (PlayStation; PlayStation 5/14.00) AppleWebKit/6
+[TLS ] handshake ok from 10.0.84.184: TLSv1.3 TLS_AES_256_GCM_SHA384
+[HTTP] GET /BEACON?V445-R15-unicode-range&t=1792485140360 -> 404  UA: Mozilla/5.0 (PlayStation; PlayStation 5/14.00) AppleWebKit/6
+[TLS ] handshake ok from 10.0.84.184: TLSv1.3 TLS_AES_256_GCM_SHA384
+[HTTP] GET /BEACON?V445-THEN-28-unicode-range&t=1792485140364 -> 404  UA: Mozilla/5.0 (PlayStation; PlayStation 5/14.00) AppleWebKit/6
+[TLS ] handshake ok from 10.0.84.184: TLSv1.3 TLS_AES_256_GCM_SHA384
+[HTTP] GET /BEACON?V445-REMOVED-unicode-range&t=1792485140366 -> 404  UA: Mozilla/5.0 (PlayStation; PlayStation 5/14.00) AppleWebKit/6
+[TLS ] handshake ok from 10.0.84.184: TLSv1.3 TLS_AES_256_GCM_SHA384
+[HTTP] GET /BEACON?V445-OK-15-H28&t=1792485140366 -> 404  UA: Mozilla/5.0 (PlayStation; PlayStation 5/14.00) AppleWebKit/6
+[TLS ] handshake ok from 10.0.84.184: TLSv1.3 TLS_AES_256_GCM_SHA384
+[HTTP] GET /BEACON?V445-R16-face-rule&t=1792485140516 -> 404  UA: Mozilla/5.0 (PlayStation; PlayStation 5/14.00) AppleWebKit/6
+[TLS ] handshake ok from 10.0.84.184: TLSv1.3 TLS_AES_256_GCM_SHA384
+[HTTP] GET /BEACON?V445-THEN-29-face-rule&t=1792485140521 -> 404  UA: Mozilla/5.0 (PlayStation; PlayStation 5/14.00) AppleWebKit/6
+[TLS ] handshake ok from 10.0.84.184: TLSv1.3 TLS_AES_256_GCM_SHA384
+[HTTP] GET /BEACON?V445-REMOVED-face-rule&t=1792485140522 -> 404  UA: Mozilla/5.0 (PlayStation; PlayStation 5/14.00) AppleWebKit/6
+[TLS ] handshake ok from 10.0.84.184: TLSv1.3 TLS_AES_256_GCM_SHA384
+[HTTP] GET /BEACON?V445-OK-16-H29&t=1792485140523 -> 404  UA: Mozilla/5.0 (PlayStation; PlayStation 5/14.00) AppleWebKit/6
+[TLS ] handshake ok from 10.0.84.184: TLSv1.3 TLS_AES_256_GCM_SHA384
+[HTTP] GET /BEACON?V445-THEN-30-use-rule&t=1792485140675 -> 404  UA: Mozilla/5.0 (PlayStation; PlayStation 5/14.00) AppleWebKit/6
+[TLS ] handshake ok from 10.0.84.184: TLSv1.3 TLS_AES_256_GCM_SHA384
+[HTTP] GET /BEACON?V445-REMOVED-use-rule&t=1792485140677 -> 404  UA: Mozilla/5.0 (PlayStation; PlayStation 5/14.00) AppleWebKit/6
+[TLS ] handshake ok from 10.0.84.184: TLSv1.3 TLS_AES_256_GCM_SHA384
+[HTTP] GET /BEACON?V445-OK-17-H30&t=1792485140677 -> 404  UA: Mozilla/5.0 (PlayStation; PlayStation 5/14.00) AppleWebKit/6
+[TLS ] handshake ok from 10.0.84.184: TLSv1.3 TLS_AES_256_GCM_SHA384
+[HTTP] GET /BEACON?V445-R17-use-rule&t=1792485140673 -> 404  UA: Mozilla/5.0 (PlayStation; PlayStation 5/14.00) AppleWebKit/6
+[TLS ] handshake ok from 10.0.84.184: TLSv1.3 TLS_AES_256_GCM_SHA384
+[HTTP] GET /BEACON?V445-R18-canvas-lookup&t=1792485140827 -> 404  UA: Mozilla/5.0 (PlayStation; PlayStation 5/14.00) AppleWebKit/6
+[TLS ] handshake ok from 10.0.84.184: TLSv1.3 TLS_AES_256_GCM_SHA384
+[HTTP] GET /BEACON?V445-CANVAS-W18&t=1792485140829 -> 404  UA: Mozilla/5.0 (PlayStation; PlayStation 5/14.00) AppleWebKit/6
+[TLS ] handshake ok from 10.0.84.184: TLSv1.3 TLS_AES_256_GCM_SHA384
+[HTTP] GET /BEACON?V445-THEN-31-canvas-lookup&t=1792485140831 -> 404  UA: Mozilla/5.0 (PlayStation; PlayStation 5/14.00) AppleWebKit/6
+[TLS ] handshake ok from 10.0.84.184: TLSv1.3 TLS_AES_256_GCM_SHA384
+[HTTP] GET /BEACON?V445-REMOVED-canvas-lookup&t=1792485140832 -> 404  UA: Mozilla/5.0 (PlayStation; PlayStation 5/14.00) AppleWebKit/6
+[TLS ] handshake ok from 10.0.84.184: TLSv1.3 TLS_AES_256_GCM_SHA384
+[HTTP] GET /BEACON?V445-OK-18-H31&t=1792485140833 -> 404  UA: Mozilla/5.0 (PlayStation; PlayStation 5/14.00) AppleWebKit/6
+[TLS ] handshake ok from 10.0.84.184: TLSv1.3 TLS_AES_256_GCM_SHA384
+[HTTP] GET /BEACON?V445-R19-unicode-range&t=1792485140983 -> 404  UA: Mozilla/5.0 (PlayStation; PlayStation 5/14.00) AppleWebKit/6
+[TLS ] handshake ok from 10.0.84.184: TLSv1.3 TLS_AES_256_GCM_SHA384
+[HTTP] GET /BEACON?V445-THEN-32-unicode-range&t=1792485140986 -> 404  UA: Mozilla/5.0 (PlayStation; PlayStation 5/14.00) AppleWebKit/6
+[TLS ] handshake ok from 10.0.84.184: TLSv1.3 TLS_AES_256_GCM_SHA384
+[HTTP] GET /BEACON?V445-REMOVED-unicode-range&t=1792485140988 -> 404  UA: Mozilla/5.0 (PlayStation; PlayStation 5/14.00) AppleWebKit/6
+[TLS ] handshake ok from 10.0.84.184: TLSv1.3 TLS_AES_256_GCM_SHA384
+[HTTP] GET /BEACON?V445-OK-19-H32&t=1792485140989 -> 404  UA: Mozilla/5.0 (PlayStation; PlayStation 5/14.00) AppleWebKit/6
+[TLS ] handshake ok from 10.0.84.184: TLSv1.3 TLS_AES_256_GCM_SHA384
+[HTTP] GET /BEACON?V445-DONE-H32&t=1792485141139 -> 404  UA: Mozilla/5.0 (PlayStation; PlayStation 5/14.00) AppleWebKit/6
