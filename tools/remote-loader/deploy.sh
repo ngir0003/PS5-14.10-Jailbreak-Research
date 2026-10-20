@@ -17,6 +17,7 @@ cp ../../probes/fontface-uaf/p452-live-flip.js .
 cp ../../probes/fontface-uaf/p453-dangling-dispatch.js .
 cp ../../probes/fontface-uaf/p454-zombie-read.js .
 cp ../../probes/fontface-uaf/p455-jsface-slot.js .
+cp ../../probes/fontface-uaf/p456-inspect-flipped.js .
 
 echo "[*] Deployed:"
 ls -la fa-*.html index.html p445-fontface-uaf.js p162-deep-scan.js
