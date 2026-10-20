@@ -73,7 +73,7 @@
     var face;
     try {
       face = Array.prototype.slice.call(document.fonts)
-        .find(function(f) { return f.family === fam; });
+        .find(function(f) { return f.family.replace(/['"]/g, '') === fam; });
     } catch (e) {
       B('ENUM-ERR-' + encodeURIComponent(String(e)).slice(0, 80));
       return;
