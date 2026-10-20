@@ -10,13 +10,13 @@
       "reason": "4.29GB sweep, process crashes before JS regains control"
     },
     "cssfontface_uaf": {
-      "status": "testing",
+      "status": "confirmed",
       "probe": "p445",
       "device_runs": {
         "run1_2026-10-20": "getter reentry confirmed inside iterateClients (THEN fires before LOADED, local(Helvetica) only); no crash; victim=use-rule disconnects nothing after FontFace in snapshot",
         "run2": "32 triggers across 4 victim variants + stress phase, no crash; style removal never disconnects a client of the JS face",
         "run3": "235 triggers across 7 boots: fonts.delete/refamily inside getter survive; confirmed m_activeCount double-decrement state corruption (source-verified), no memory corruption",
-        "run4": "v4 deployed: upstream PoC port \u2014 CSS-created face via @font-face, CSSFontSelector client"
+        "run4": "CRASH CONFIRMED on device (4/4 deterministic): CSS-created face + then-getter + victim style removal -> UAF death after VR, before load promise resolves"
       }
     }
   },

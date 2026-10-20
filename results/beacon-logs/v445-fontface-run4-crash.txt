@@ -1,0 +1,31 @@
+# p445 run 4 — 2026-10-20, PS5 14.10 via User's Guide loader (probe v445f)
+# OUTCOME: CRASH CONFIRMED — CVE-2026-43715 deterministic UAF on device.
+# Every v445f run: BOOT4 -> LOAD-0 -> THEN-1 -> VR-1 -> process death.
+# The .then getter runs inside iterateClients, removes the victim style,
+# forces layout; the loop then callbacks a disconnected client and the
+# WebContent process dies before the load promise resolves. 4/4 runs.
+# (Earlier OK/VR lines below the marker are from prior v445d NOFACE runs.)
+[HTTP] GET /BEACON?V445-BOOT4&t=1792486056215 -> 404  UA: Mozilla/5.0 (PlayStation; PlayStation 5/14.00) AppleWebKit/6
+[HTTP] GET /BEACON?V445-LOAD-0&t=1792486056217 -> 404  UA: Mozilla/5.0 (PlayStation; PlayStation 5/14.00) AppleWebKit/6
+[HTTP] GET /BEACON?V445-THEN-1&t=1792486056218 -> 404  UA: Mozilla/5.0 (PlayStation; PlayStation 5/14.00) AppleWebKit/6
+[HTTP] GET /BEACON?V445-VR-1&t=1792486056219 -> 404  UA: Mozilla/5.0 (PlayStation; PlayStation 5/14.00) AppleWebKit/6
+[HTTP] GET /BEACON?V445-BOOT4&t=1792486084046 -> 404  UA: Mozilla/5.0 (PlayStation; PlayStation 5/14.00) AppleWebKit/6
+[HTTP] GET /BEACON?V445-LOAD-0&t=1792486084048 -> 404  UA: Mozilla/5.0 (PlayStation; PlayStation 5/14.00) AppleWebKit/6
+[HTTP] GET /BEACON?V445-THEN-1&t=1792486084049 -> 404  UA: Mozilla/5.0 (PlayStation; PlayStation 5/14.00) AppleWebKit/6
+[HTTP] GET /BEACON?V445-VR-1&t=1792486084049 -> 404  UA: Mozilla/5.0 (PlayStation; PlayStation 5/14.00) AppleWebKit/6
+[HTTP] GET /BEACON?V445-BOOT4&t=1792486086215 -> 404  UA: Mozilla/5.0 (PlayStation; PlayStation 5/14.00) AppleWebKit/6
+[HTTP] GET /BEACON?V445-LOAD-0&t=1792486086217 -> 404  UA: Mozilla/5.0 (PlayStation; PlayStation 5/14.00) AppleWebKit/6
+[HTTP] GET /BEACON?V445-THEN-1&t=1792486086218 -> 404  UA: Mozilla/5.0 (PlayStation; PlayStation 5/14.00) AppleWebKit/6
+[HTTP] GET /BEACON?V445-VR-1&t=1792486086219 -> 404  UA: Mozilla/5.0 (PlayStation; PlayStation 5/14.00) AppleWebKit/6
+[HTTP] GET /BEACON?V445-BOOT4&t=1792486088129 -> 404  UA: Mozilla/5.0 (PlayStation; PlayStation 5/14.00) AppleWebKit/6
+[HTTP] GET /BEACON?V445-LOAD-0&t=1792486088130 -> 404  UA: Mozilla/5.0 (PlayStation; PlayStation 5/14.00) AppleWebKit/6
+[HTTP] GET /BEACON?V445-THEN-1&t=1792486088131 -> 404  UA: Mozilla/5.0 (PlayStation; PlayStation 5/14.00) AppleWebKit/6
+[HTTP] GET /BEACON?V445-VR-1&t=1792486088132 -> 404  UA: Mozilla/5.0 (PlayStation; PlayStation 5/14.00) AppleWebKit/6
+[HTTP] GET /BEACON?V445-BOOT4&t=1792486090233 -> 404  UA: Mozilla/5.0 (PlayStation; PlayStation 5/14.00) AppleWebKit/6
+[HTTP] GET /BEACON?V445-LOAD-0&t=1792486090235 -> 404  UA: Mozilla/5.0 (PlayStation; PlayStation 5/14.00) AppleWebKit/6
+[HTTP] GET /BEACON?V445-THEN-1&t=1792486090236 -> 404  UA: Mozilla/5.0 (PlayStation; PlayStation 5/14.00) AppleWebKit/6
+[HTTP] GET /BEACON?V445-VR-1&t=1792486090237 -> 404  UA: Mozilla/5.0 (PlayStation; PlayStation 5/14.00) AppleWebKit/6
+[HTTP] GET /BEACON?V445-BOOT4&t=1792486092314 -> 404  UA: Mozilla/5.0 (PlayStation; PlayStation 5/14.00) AppleWebKit/6
+[HTTP] GET /BEACON?V445-LOAD-0&t=1792486092316 -> 404  UA: Mozilla/5.0 (PlayStation; PlayStation 5/14.00) AppleWebKit/6
+[HTTP] GET /BEACON?V445-THEN-1&t=1792486092317 -> 404  UA: Mozilla/5.0 (PlayStation; PlayStation 5/14.00) AppleWebKit/6
+[HTTP] GET /BEACON?V445-VR-1&t=1792486092317 -> 404  UA: Mozilla/5.0 (PlayStation; PlayStation 5/14.00) AppleWebKit/6

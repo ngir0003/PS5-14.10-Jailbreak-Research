@@ -1,6 +1,6 @@
 # CSSFontFace iterateClients UAF (CVE-2026-43715)
 
-**Status:** Unpatched in WK-1400 (PS5 14.10). Device test deployed; crash not yet confirmed.
+**Status:** CONFIRMED on device (2026-10-20, 4/4 runs). Unpatched in WK-1400 (PS5 14.10).
 **CVE:** CVE-2026-43715
 **Upstream:** Patched in commit `5aedb82710ba578f`.
 
@@ -98,3 +98,17 @@ with a fresh family name per round, then a fast stress phase that keeps
 faces in the set so CSSFontFaceSet active counts carry state. Crash
 signature: beacons stop after a `V445-THEN-n-<variant>`; the variant tag
 names the client type that died.
+
+
+## Device Confirmation (2026-10-20)
+
+Crash confirmed, 4/4 deterministic runs, probe v445f. The upstream
+regression-test conditions are required: a CSS-created face (from an
+@font-face rule, enumerated from document.fonts — FontFaceSet is Set-like,
+enumerate with forEach/iterator, NOT Array.prototype.slice), local(Helvetica)
+source, a separate victim stylesheet, and touching face.loaded before load().
+Sequence on device: LOAD-0 -> THEN-1 (getter inside iterateClients) -> VR-1
+(victim removed + layout forced) -> process death before the load promise
+resolves. new FontFace() faces never crash (v1-v3, 235 clean triggers) —
+the CSSFontSelector client only attaches to CSS-created faces
+(CSSFontFace.cpp:100). Log: results/beacon-logs/v445-fontface-run4-crash.txt.
