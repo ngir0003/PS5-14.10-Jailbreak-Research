@@ -147,18 +147,26 @@ same-class dispatch: it sets the wrong wrapper's status and resolves its
   `t1x34` x2, `t1x37` x2 — always `Sloaded`. The landing slot jitters by a
   few spray positions (heap-layout run-to-run variance) but the flip itself
   is fully reliable in this build.
-- Bonus signal: the flip's promise resolution resolves *with the FontFace
-  object itself*, whose thenable check re-reads `FontFace.prototype.then` —
-  our getter fires a second time (`THEN-2`), synchronous inside the confused
-  callback, inside `iterateClients`, inside the trigger's `setStatus`. A
-  controlled re-entry point into the corrupted loop.
+- CORRECTION (p453, 9+ runs): the flip itself is silent in C++ — the
+  getter is hit exactly once. p452's `THEN-2` was the promise-assimilation
+  thenable check firing when `hook()` attached `.then` to the already
+  resolved flipped promise — a microtask artifact, NOT re-entry inside the
+  confused dispatch. Still useful: at attach time `this` inside the getter
+  IS the flipped wrapper, so the artifact identifies the confused-callback
+  target from JS (p454 uses this deliberately).
 
-### Next: p453 — second-order escalation
+### p453/p454 — second-order escalation
 
-At `THEN-2` we are in JS while WebKit still holds the confused pointer.
-Remove the flipped face's style + force layout there to free the *replacement*
-wrapper, then steer what lands in the slot (different CSSFontFaceClient
-subclass — `CSSFontSelector::fontLoaded` vs `FontFace::fontLoaded` have
-wildly different bodies, and the callback's argument is the trigger CSSFontFace
-we control). Goal: aim the dispatch, then overlap with JS-controlled memory
-for addrof/fakeobj.
+p453 (9+ runs): freeing at getter-hit-2 never fired (hits stays 1) — this is
+what falsified the in-dispatch re-entry reading. Census still shows exactly
+one flipped face (`CEN1-U119L1`), confirming the silent flip.
+
+p454: drive the free from the assimilation artifact — attach `.loaded.then`
+to every sprayed face after the trigger; the one attach that fires the getter
+identifies the flipped wrapper (`this`). Take its family name only (a held JS
+ref pins the C++ FontFace and blocks the free), remove its style + force
+layout, re-spray, then re-enumerate `document.fonts` and read statuses: a
+dangling set entry would be a JS-reachable UAF read. Longer term, the aim
+remains steering the slot contents at a different CSSFontFaceClient subclass
+(`FontFace::fontLoaded` vs `CSSFontSelector::fontLoaded` differ wildly; the
+callback argument is the trigger CSSFontFace we control) for addrof/fakeobj.
