@@ -1,13 +1,13 @@
 #!/bin/bash
 # night-watch.sh — unattended 24/7 watcher for the p457 auto-reload loop.
 # Tallies new V457 beacons since the last watermark, appends a summary
-# to results/beacon-logs/night-tally.log, commits + pushes if anything
+# to results/beacon-logs/night-tally.txt, commits + pushes if anything
 # new arrived, and flags when the loop looks stalled (no beacons).
 set -u
 cd "$(dirname "$0")/.."
 LOG=tools/remote-loader/host-stdout.log
 WM=results/beacon-logs/.night-watermark
-TALLY=results/beacon-logs/night-tally.log
+TALLY=results/beacon-logs/night-tally.txt
 
 TOTAL=$(wc -l < "$LOG" | tr -d ' ')
 LAST=$(cat "$WM" 2>/dev/null || echo 0)
@@ -35,6 +35,6 @@ DIST=$(grep -o "V457-FLIPPOS-[0-9]*" <<<"$NEW" | sed 's/V457-FLIPPOS-//' | sort 
 
 echo "$TOTAL" > "$WM"
 
-git add results/beacon-logs/night-tally.log >/dev/null 2>&1
+git add results/beacon-logs/night-tally.txt >/dev/null 2>&1
 git commit -q -m "night watch: $BOOTS runs, flip dist [$DIST]" >/dev/null 2>&1
 git push -q fork master >/dev/null 2>&1 || true
