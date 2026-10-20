@@ -65,3 +65,78 @@ trigger, read back every element of every array:
 - nothing changed -> JS-heap objects don't claim the block; fall back
   to WebCore same-class sprays (strings/vectors) with JS-readable
   contents as the oracle
+
+## Ladder results (2026-10-20 night session) — the flip IS the write
+
+Device evidence from p460-sprayladder (beacons in results/beacon-logs/):
+
+| rung | getter sprays | result |
+|---|---|---|
+| p457 (historical) | 120 JS FontFaces | SURVIVES hundreds of runs, flips at attractor positions |
+| p459 v1/v2 | 200 / 64 double-arrays | DIES, even with every element 0.0 (cfg0 baseline) |
+| p460 P0 | nothing | DIES (freeze, watchdog never fires) |
+| p460 P1 | 120 FontFaces (p457 recipe) | pending — console OOM'd mid-ladder (memory exhausted by the night's freeze/restart cycles; rerun after cold boot) |
+
+**Mechanism resolved.** Constructing a FontFace allocates a fresh CSSFontFace —
+the same bmalloc class as the freed T. One of them claims the freed block, so
+the frame's post-free reads (sources Vector, clients WeakHashSet, Timer) all
+land on a *valid live object*: the page survives, and the only visible effect
+is that face's `status` flipping to `loaded` with descriptors pristine and
+promise pending.
+
+**That flip — recorded for weeks as an unexplained signal — is the dangling
+`m_status = Status::Success` write landing in the reoccupying CSSFontFace's
+own m_status field.** The primitive fires safely on demand; it has never been
+aimed at anything other than another CSSFontFace.
+
+Arrays can't rescue: with array data in the block, the frame's reads hit
+un-healable bytes (all-zero elements still die — the lethal read is the
+butterfly's nonzero length header at +0x00 or the object tail beyond the
+butterfly). Unsprayed blocks die too (stale bytes).
+
+## Exact member order (vulnerable tree, /tmp fetch of parent-of-fix)
+
+From CSSFontFace.h, private members in declaration order:
+
+    refcount | m_propertiesOrCSSConnection (Variant, 16B) | m_family (RefPtr, 8)
+    | m_ranges (Vector, 16) | m_featureSettings (Vector?) | m_loadingBehavior (4)
+    | m_sizeAdjust (4) | m_sources (Vector, 16) | m_clients (WeakHashSet)
+    | m_wrapper (WeakPtr, 8) | m_fontSelectionCapabilities (~16)
+    | m_status (enum) | bitfields + 4 enums | m_timeoutTimer (Timer, ~32-40B)
+
+Total ≈ 0x98–0xC0 → bmalloc class 192/224. m_status sits late, immediately
+before the bitfields and Timer. Status::Success = 3.
+
+Key consequence of ORDER: the post-write reads the frame performs
+(fontLoadTiming enums, Timer) live in the LAST ~0x30 bytes of the object, and
+m_clients/m_wrapper just before m_status — all in the tail. A reoccupant
+whose tail bytes are ZERO presents an empty WeakHashSet, an unscheduled
+Timer, and default timing enums: plausibly safe to the frame, same as a
+fresh CSSFontFace is.
+
+## p461 — string canary: measure the write offset exactly
+
+Weaponization needs offsetof(m_status) ON DEVICE. A WTF StringImpl is
+bmalloc-backed (same heap as WebCore with Gigacage off) and its bytes are
+JS-readable:
+
+- 8-bit StringImpl: 16-byte header (refcount, length, hash, flags) + data
+- 176 chars of U+0000 → 16 + 176 = 192 bytes → same class as CSSFontFace
+- Header (nonzero) overlaps properties/family — NOT read by the frame in
+  this path. Zero data covers sources/clients/wrapper/capabilities/status/
+  bitfields/Timer: every post-write read sees "empty/idle".
+- The m_status write (4 bytes, 03 00 00 00) lands in character data at
+  char index (offsetof(m_status) − 16) → reading the string back from JS
+  after the trigger yields a nonzero charCode at an index that IS the
+  offset, to the byte.
+
+Rungs: FontFace rescue control (expect survive+flip) → 8 strings → 64 → 256.
+Survive + one altered string = the write caught at a measured offset with the
+page alive and the object JS-readable — the strongest observation available
+before aiming the write at a chosen structure.
+
+Fork after p461: if strings survive but never claim (no alteration, ever),
+the class-192 claim path is CSSFontFace-specific (JSC-side segregation), and
+weaponization goes through the FontFace reoccupant itself: chain a SECOND
+free — flip a sprayed face's status, then free IT from JS
+(document.fonts.delete + GC) while the frame's Timer write window is open.
