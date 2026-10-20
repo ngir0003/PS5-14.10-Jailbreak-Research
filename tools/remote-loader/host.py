@@ -70,6 +70,12 @@ DEFAULT_TARGET = "manuals.playstation.net"
 DEFAULT_TTL = 300
 REPO_ROOT = os.path.dirname(os.path.abspath(__file__))
 
+# Structured beacon capture (see GuideHandler._capture_beacon).
+BEACON_JSONL = os.path.normpath(os.path.join(
+    REPO_ROOT, "..", "..", "results", "beacon-logs", "beacons.jsonl"))
+_BEACON_LOCK = threading.Lock()
+os.makedirs(os.path.dirname(BEACON_JSONL), exist_ok=True)
+
 
 # --- terminal output -------------------------------------------------------
 
@@ -245,8 +251,38 @@ class GuideHandler(SimpleHTTPRequestHandler):
         a cert error or a blank page you need to know whether the request
         arrived at all. This is the line that answers that.
         """
+        self._capture_beacon()
         agent = self.headers.get("User-Agent", "-")
         say(style(f"[HTTP] {self.command} {self.path} -> {code}  UA: {agent[:60]}", 36))
+
+    def _capture_beacon(self):
+        """Append /BEACON?... probes to results/beacon-logs/beacons.jsonl.
+
+        Probes phone home with `new Image().src = '/BEACON?VNNN-tag&t=...'`;
+        before this the request line in host-stdout.log was the only trace.
+        Structured capture lets analysis tools run without grepping logs.
+        Must never raise: beacons are telemetry, not a critical path.
+        """
+        if not self.path.startswith("/BEACON?"):
+            return
+        try:
+            query = self.path.split("?", 1)[1]
+            beacon = urllib.parse.unquote(query.split("&", 1)[0])
+            client_t = None
+            for kv in query.split("&")[1:]:
+                key, _, val = kv.partition("=")
+                if key == "t":
+                    client_t = val
+            rec = {"ts": datetime.datetime.utcnow().isoformat() + "Z",
+                   "beacon": beacon}
+            if client_t is not None:
+                rec["t"] = client_t
+            line = json.dumps(rec) + "\n"
+            with _BEACON_LOCK:
+                with open(BEACON_JSONL, "a") as f:
+                    f.write(line)
+        except Exception:
+            pass
 
     def _relative_path(self):
         """Request path, normalized and docroot-relative ('' for root).
