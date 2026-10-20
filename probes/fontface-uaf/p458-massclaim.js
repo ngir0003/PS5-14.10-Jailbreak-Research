@@ -54,6 +54,7 @@
       if (v) {
         v.remove();
         document.body.offsetHeight;      // free happens here
+        bufs = [];   // cleanup() nulls it between rounds — re-arm here
         for (var i = 0; i < N; i++) {
           var buf = new ArrayBuffer(k);
           var u8 = new Uint8Array(buf);
