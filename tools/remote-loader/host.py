@@ -273,7 +273,7 @@ class GuideHandler(SimpleHTTPRequestHandler):
                 key, _, val = kv.partition("=")
                 if key == "t":
                     client_t = val
-            rec = {"ts": datetime.datetime.utcnow().isoformat() + "Z",
+            rec = {"ts": datetime.datetime.now(datetime.UTC).isoformat(),
                    "beacon": beacon}
             if client_t is not None:
                 rec["t"] = client_t
