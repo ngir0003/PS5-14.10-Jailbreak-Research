@@ -170,3 +170,21 @@ dangling set entry would be a JS-reachable UAF read. Longer term, the aim
 remains steering the slot contents at a different CSSFontFaceClient subclass
 (`FontFace::fontLoaded` vs `CSSFontSelector::fontLoaded` differ wildly; the
 callback argument is the trigger CSSFontFace we control) for addrof/fakeobj.
+
+### Client census (source-read, 2026-10-20 late)
+
+CSSFontFaceClient subclasses and registration sites:
+- `CSSFontFaceSet` — `add()` does `face.addClient(*this)` (one per
+  document's font set: singleton, not sprayable)
+- `CSSFontSelector` — `create()` does `result->addClient(fontSelector)`
+  (one per document: singleton, not sprayable)
+- `FontFace` wrapper — the only mass-producible client; what our spray
+  allocates and what the confused dispatch lands on today
+
+Conclusion: aiming the slot at a *different client class* via spray is
+not possible — there is no other sprayable subclass. The exploitation
+path is data-aiming: put a wrapper with attacker-controlled internals
+(JS-constructed `new FontFace()` with chosen descriptors, or a
+wrapper-over-controlled-backing) in the slot and study the confused
+`fontLoaded(triggerFace)` against it. The trigger face (the callback
+argument) is already fully attacker-chosen.
