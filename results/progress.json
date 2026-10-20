@@ -78,13 +78,13 @@
     "p450_fingerprint": "unicode-range does NOT keep local() faces unloaded on PS5 \u2014 all sprayed faces eager-load; fingerprint needs a different baseline (next: error-status faces via failing src)",
     "stage2_fingerprint": "p451 final: 18/25 runs (72%) flip t1x1 (spray position 1, round 1) to loaded; never any other face. Positionally predictable confused callback.",
     "p451_notes": "local(Songti) CSS faces report status \"unloaded\" not \"error\" on PS5; error-spray also survives the groom (reclaims the hole like Helvetica spray)",
-    "stage2_live_hook": "p452 (2/2): UAF callback resolves a sprayed face loaded promise, delivered live in JS: FIRED-t1x30-Sloaded + the resolution thenable check re-fires our then-getter (THEN-2 4ms after SURVIVED). Exactly one face fires, deterministic per build; landing position shifted t1x1->t1x30 with code changes (depends on allocation history, not chance)."
+    "stage2_live_hook": "p452 (5/5, 100%): UAF callback resolves sprayed face t1x30 loaded promise, delivered live in JS (FIRED-t1x30-Sloaded), plus the resolution thenable check re-fires our then-getter (THEN-2). Deterministic single-target confused callback, positionally stable per build."
   },
   "device_runs": {
     "v448": "7/7 SURVIVED + ALIVE-1S, CLEAN scans",
     "v449": "12+ runs; log results/beacon-logs/v449-multi-round-run1.txt",
     "v450": "5+ runs, all 4/4 rounds survived",
     "v451": "25 runs; 18/25 t1x1=loaded flip",
-    "v452": "2/2 FIRED-t1x30 (collecting more)"
+    "v452": "5/5 FIRED-t1x30 (100%)"
   }
 }
