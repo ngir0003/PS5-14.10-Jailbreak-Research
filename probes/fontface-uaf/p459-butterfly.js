@@ -45,13 +45,18 @@
   var ran = 0;         // 1 = a round with this cfg started but no SURVIVED yet
   try { ran = parseInt(localStorage.getItem('p459ran') || '0', 10); } catch(e) {}
   if (ran === 1) {
-    // we booted while a round was in flight: that cfg killed the page
+    // we booted while a round was in flight: that cfg killed the page.
+    // Attended mode: advance past the killer and PARK — exactly one
+    // auto-restore per killer offset, then the page is stable and waits
+    // for a human re-entry. Never let auto-restore chain rounds.
     B('KILL-cfg' + cfg);
     if (cfg === 0) { park('baseline all-zero also kills — elements are not the death cause'); return; }
     cfg = cfg + 1;
     if (cfg > CAP) { park('map complete — see beacons'); return; }
     store('p459b', cfg);
-    ran = 0; store('p459ran', 0);
+    store('p459ran', 0);
+    park('killer was element ' + (cfg - 1) + ' — back out, re-enter guide to continue');
+    return;
   }
 
   // ---------- loop guard ----------
