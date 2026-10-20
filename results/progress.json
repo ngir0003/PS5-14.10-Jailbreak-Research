@@ -1,8 +1,8 @@
 {
-  "sessions": 10,
+  "sessions": 11,
   "probes_built": 84,
   "days": 4,
-  "last_updated": "2026-10-18",
+  "last_updated": "2026-10-20",
   "bugs_found": {
     "metadatatable_overflow": {
       "cve": "CVE-2026-64784",
@@ -11,8 +11,11 @@
     },
     "cssfontface_uaf": {
       "status": "testing",
-      "probe": "p170",
-      "source": "CSSFontFaceSet.cpp:381"
+      "probe": "p445",
+      "device_runs": {
+        "run1_2026-10-20": "getter reentry confirmed inside iterateClients (THEN fires before LOADED, local(Helvetica) only); no crash; victim=use-rule disconnects nothing after FontFace in snapshot",
+        "run2": "v2 deployed: face-rule/use-rule/canvas-lookup/unicode-range victims + stress phase"
+      }
     }
   },
   "dead_ends": [
@@ -49,7 +52,15 @@
   ],
   "device_recon": {
     "fontface_api": true,
-    "image_formats": ["png", "jpeg", "gif", "webp", "bmp", "svg", "ico"],
+    "image_formats": [
+      "png",
+      "jpeg",
+      "gif",
+      "webp",
+      "bmp",
+      "svg",
+      "ico"
+    ],
     "create_image_bitmap": true,
     "woff2": false,
     "truncated_png_loads": true,

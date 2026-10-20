@@ -78,4 +78,23 @@ All required APIs have been confirmed available on PS5 14.10:
 
 ## Device Test
 
-Deployed as `fa-v445-fontface.html` (probe `p445-fontface-uaf.js`). The test tries local font names first and falls back to a data: URI TTF. Awaiting crash confirmation on device.
+Deployed as `fa-v445-fontface.html` (probe `p445-fontface-uaf.js`).
+
+**Run 1 (2026-10-20, device):** getter reentry confirmed live. On the
+`local(Helvetica)` rounds the `.then` getter executes synchronously inside
+the client iteration loop (`V445-THEN-n` beacons fire before
+`V445-LOADED-n`). No crash in 3 triggers. A victim style that merely *uses*
+the family disconnects no client that iterates after the FontFace.
+`local(Songti)`, `local(SCE-PS3 Rodin LATIN)`, `local(--default--)` and a
+data: URI TTF all reject with NetworkError -- `local(Helvetica)` is the only
+source that reaches `setStatus(Success)` on this firmware. Log:
+`results/beacon-logs/v445-fontface-run1.txt`.
+
+**Run 2 (v2, deployed):** cycles victim variants per client type --
+`face-rule` (CSS-created @font-face for the same family), `use-rule`
+(control), `canvas-lookup` (canvas measureText forces a CSSFontSelector
+lookup + cache before load), `unicode-range` (CSSSegmentedFontFace path) --
+with a fresh family name per round, then a fast stress phase that keeps
+faces in the set so CSSFontFaceSet active counts carry state. Crash
+signature: beacons stop after a `V445-THEN-n-<variant>`; the variant tag
+names the client type that died.
