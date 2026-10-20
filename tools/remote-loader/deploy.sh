@@ -10,6 +10,7 @@ cp ../../probes/metadata-overflow/extraction/p162-deep-scan.js .
 cp ../../probes/fontface-uaf/p446-groom-survive.js .
 cp ../../probes/fontface-uaf/p447-spray-clients.js .
 cp ../../probes/fontface-uaf/p448-tight-spray.js .
+cp ../../probes/fontface-uaf/p449-multi-round.js .
 
 echo "[*] Deployed:"
 ls -la fa-*.html index.html p445-fontface-uaf.js p162-deep-scan.js

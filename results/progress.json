@@ -1,5 +1,5 @@
 {
-  "sessions": 11,
+  "sessions": 12,
   "probes_built": 84,
   "days": 4,
   "last_updated": "2026-10-20",
@@ -68,5 +68,13 @@
     "truncated_png_loads": true,
     "max_glyphs_65535_accepted": true,
     "units_per_em_0_renders": true
+  },
+  "cssfontface_uaf": {
+    "stage1_crash": "confirmed (p445, 2026-10-20, 18+/18)",
+    "stage2_survival": "confirmed (p448, 2026-10-20, 7/7): tight per-item spray after the free \u2014 real objects reclaim the slot, UAF callback dispatches harmlessly",
+    "groom_recipe": "getter reentry: victim style remove + offsetHeight, then 120x (style @font-face local(Helvetica) + div text sink + offsetHeight) \u2014 one allocation per free-list pop"
+  },
+  "device_runs": {
+    "v448": "7/7 SURVIVED + ALIVE-1S, CLEAN scans"
   }
 }
