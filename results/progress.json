@@ -79,13 +79,15 @@
     "stage2_fingerprint": "p451 final: 18/25 runs (72%) flip t1x1 (spray position 1, round 1) to loaded; never any other face. Positionally predictable confused callback.",
     "p451_notes": "local(Songti) CSS faces report status \"unloaded\" not \"error\" on PS5; error-spray also survives the groom (reclaims the hole like Helvetica spray)",
     "stage2_live_hook": "p452 FINAL: 28/28 runs (100%) exactly one sprayed face loaded-promise fires: t1x30 x24, t1x34 x2, t1x37 x2. Same-class FontFace-wrapper confusion confirmed (wrapper->fontLoaded sets wrong status + resolves promise). THEN-2 = controlled JS re-entry inside the confused dispatch. Stage 2 groom + live hook complete; p453 = aim the dispatch.",
-    "stage2_then2_correction": "p453 (9+ runs): the flip is SILENT in C++ - no .then getter hit. p452 THEN-2 was the promise-assimilation thenable check firing when hook() attached .then to the already-resolved flipped promise (microtask artifact), NOT re-entry inside the confused dispatch. THEN-2 still identifies the flipped wrapper via `this` at attach time - usable deliberately (p454)."
+    "stage2_then2_correction": "p453 (9+ runs): the flip is SILENT in C++ - no .then getter hit. p452 THEN-2 was the promise-assimilation thenable check firing when hook() attached .then to the already-resolved flipped promise (microtask artifact), NOT re-entry inside the confused dispatch. THEN-2 still identifies the flipped wrapper via `this` at attach time - usable deliberately (p454).",
+    "stage2_p454": "p454: assimilation artifact identified the flip (T2-t1x27, jitter per build as expected); free of the flipped wrapper SUCCEEDS and the page survives, but document.fonts removes the entry synchronously (N1 drops 120->119, no dangling entry) -> zombie-read via the set is closed. Next lever: aim what lands in the slot at spray time (inside THEN-1), not after - need a mass-producible CSSFontFaceClient of a different class or a controlled-size object with a valid vtable."
   },
   "device_runs": {
     "v448": "7/7 SURVIVED + ALIVE-1S, CLEAN scans",
     "v449": "12+ runs; log results/beacon-logs/v449-multi-round-run1.txt",
     "v450": "5+ runs, all 4/4 rounds survived",
     "v451": "25 runs; 18/25 t1x1=loaded flip",
-    "v452": "28/28 flip (t1x30 x24, t1x34 x2, t1x37 x2)"
+    "v452": "28/28 flip (t1x30 x24, t1x34 x2, t1x37 x2)",
+    "v454": "1 run: T2-t1x27, FREED+RESPRAYED, ZC-N1-119-L0 (clean removal)"
   }
 }
