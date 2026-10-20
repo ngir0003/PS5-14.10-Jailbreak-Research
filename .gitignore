@@ -39,3 +39,7 @@ Thumbs.db
 *.o
 *.so
 *.dylib
+
+# Probe copies deployed into the loader dir (recreated by deploy.sh)
+tools/remote-loader/p[0-9]*.js
+tools/remote-loader/__pycache__/
