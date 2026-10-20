@@ -214,3 +214,37 @@ a flip landing anywhere other than a pristine wrapper). Keep
 FontFace.cpp/CSSFontFace.cpp (fetched to /tmp/claude-501/ps5/wk/) at
 hand; FontFace::adopt (removeClient/addClient pair) is also worth
 studying as a re-registration primitive.
+
+## p458 — heap class-map of the freed slot (2026-10-20 night 3)
+
+Infrastructure upgrade first: host.py now captures every /BEACON probe
+into results/beacon-logs/beacons.jsonl (structured, ts-tagged); tally
+with `python3 tools/beacon-stats.py [prefix] [--dist]`. The 457 census
+loop graduated into p458 (fa-v458-classmap.html).
+
+Design. p446's key negative result — raw ArrayBuffer marker bytes at
+the slot kill the dispatch 18/18 — is also a positive fact: a
+size-matched ArrayBuffer backing store CAN claim the freed wrapper
+slot (shared FastMalloc class). So the wrapper's allocation class is
+directly measurable from JS: per run, insert exactly ONE filler
+`new ArrayBuffer(k)` between the free and the face spray (LIFO free
+list: the first same-class allocation takes the block). k cycles over
+[0,16,24,32,40,48,56,64,72,80,96,112,128] via localStorage so a crash
+round doesn't lose the schedule when the page is re-parked.
+
+Readout per k:
+- flips survive -> k outside the wrapper class (filler went elsewhere)
+- page dies (last beacon = K<k>-GO) -> k is IN the class: killer size
+  identifies the FontFace wrapper's FastMalloc size class exactly
+
+k=0 rounds are the p457 baseline and keep feeding the flip-position
+distribution. One crash is expected per killer size; re-park resumes
+past it automatically.
+
+Why the class matters: once the wrapper's class is known, the next
+step (p459) sprays same-class WebCore objects with VALID vtables but
+different identities — the confused `fontLoaded` virtual call then
+dispatches through the wrong vtable index into a different class's
+virtual method with our pointers as arguments. That is the road to a
+wider primitive than the one-enum write, and it needs no address leak
+to take the first step (a valid vtable is present by construction).
