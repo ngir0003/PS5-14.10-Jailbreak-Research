@@ -70,15 +70,17 @@
 
     B('R' + i);
 
-    var face;
+    var faces = [];
     try {
-      face = Array.prototype.slice.call(document.fonts)
-        .find(function(f) { return f.family.replace(/['"]/g, '') === fam; });
+      document.fonts.forEach(function(f) { faces.push(f); });
     } catch (e) {
       B('ENUM-ERR-' + encodeURIComponent(String(e)).slice(0, 80));
       return;
     }
-    if (!face) { B('NOFACE-' + i); return; }
+    var face = faces.find(function(f) {
+      return f.family.replace(/['"]/g, '') === fam;
+    });
+    if (!face) { B('NOFACE-' + i + '-N' + faces.length); return; }
 
     void face.loaded; // touch the promise like the upstream test
 
