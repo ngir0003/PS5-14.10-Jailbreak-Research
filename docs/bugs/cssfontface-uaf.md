@@ -188,3 +188,29 @@ path is data-aiming: put a wrapper with attacker-controlled internals
 wrapper-over-controlled-backing) in the slot and study the confused
 `fontLoaded(triggerFace)` against it. The trigger face (the callback
 argument) is already fully attacker-chosen.
+
+### p455/p456 — data-aiming achieved, footprint mapped (2026-10-20 night 2)
+
+- p455 (3/3): JS-constructed `new FontFace()` wrappers take the freed
+  slot; one flips to `loaded`. Data-aiming works — the confused dispatch
+  lands on an attacker-owned object with chosen descriptors.
+- p456 (3/3, J57 stable): flipped face has `status=loaded`, every other
+  descriptor pristine, `loaded` promise pending, and `load()` never
+  settles (control rejects NetworkError).
+- Source-grounded (FontFace.cpp `fontStateChanged`): the legit Success
+  path ALWAYS resolves m_loadedPromise. J57's pending promise proves the
+  confused call wrote the backing's status field directly, bypassing
+  pump/fontStateChanged entirely — a state unreachable via the API.
+
+### Next direction (p457+)
+
+The confused call's write is narrow: one status enum field on the
+backing of the wrapper that lands in the slot. Aiming DATA got us this
+far; to widen the write, the next lever is SIZE: mismatch the freed
+victim's allocation size against the spray so the confused client
+pointer lands *offset into* a larger sprayed object (classic heap
+shaping — vary victim construction vs spray object size and census for
+a flip landing anywhere other than a pristine wrapper). Keep
+FontFace.cpp/CSSFontFace.cpp (fetched to /tmp/claude-501/ps5/wk/) at
+hand; FontFace::adopt (removeClient/addClient pair) is also worth
+studying as a re-registration primitive.
