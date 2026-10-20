@@ -1,0 +1,75 @@
+# p445 run 1 — 2026-10-20, PS5 14.10 via User's Guide loader
+# Outcome: no crash, 3 getter triggers (rounds 1, 6, 11 = local(Helvetica))
+# Confirmed live: .then getter executes synchronously inside the
+# iterateClients callback loop (THEN-n fires before LOADED-n).
+# local(Songti) / local(SCE-PS3 Rodin LATIN) / local(--default--) / data: TTF
+# all reject with NetworkError — Helvetica is the only usable local source.
+V445-BOOT
+V445-GETTER-SET
+V445-ROUND-0
+V445-SRC-0-local:Songti)
+V445-ADDED-0
+V445-REJECTED-0-NetworkError: A network error occurred.-HITS0
+V445-ROUND-1
+V445-SRC-1-local:Helvetica)
+V445-ADDED-1
+V445-THEN-1
+V445-THEN-VICTIM-REMOVED
+V445-LOADED-1-HITS1
+V445-ROUND-2
+V445-SRC-2-local:SCE-PS3 Rodin LATIN)
+V445-ADDED-2
+V445-REJECTED-2-NetworkError: A network error occurred.-HITS1
+V445-ROUND-3
+V445-SRC-3-local:--default--)
+V445-ADDED-3
+V445-REJECTED-3-NetworkError: A network error occurred.-HITS1
+V445-ROUND-4
+V445-SRC-4-ttf
+V445-ADDED-4
+V445-REJECTED-4-NetworkError: A network error occurred.-HITS1
+V445-ROUND-5
+V445-SRC-5-local:Songti)
+V445-ADDED-5
+V445-REJECTED-5-NetworkError: A network error occurred.-HITS1
+V445-ROUND-6
+V445-SRC-6-local:Helvetica)
+V445-ADDED-6
+V445-THEN-2
+V445-THEN-VICTIM-REMOVED
+V445-LOADED-6-HITS2
+V445-ROUND-7
+V445-SRC-7-local:SCE-PS3 Rodin LATIN)
+V445-ADDED-7
+V445-REJECTED-7-NetworkError: A network error occurred.-HITS2
+V445-ROUND-8
+V445-SRC-8-local:--default--)
+V445-ADDED-8
+V445-REJECTED-8-NetworkError: A network error occurred.-HITS2
+V445-ROUND-9
+V445-SRC-9-ttf
+V445-ADDED-9
+V445-REJECTED-9-NetworkError: A network error occurred.-HITS2
+V445-ROUND-10
+V445-SRC-10-local:Songti)
+V445-ADDED-10
+V445-REJECTED-10-NetworkError: A network error occurred.-HITS2
+V445-ROUND-11
+V445-SRC-11-local:Helvetica)
+V445-ADDED-11
+V445-THEN-3
+V445-THEN-VICTIM-REMOVED
+V445-LOADED-11-HITS3
+V445-ROUND-12
+V445-SRC-12-local:SCE-PS3 Rodin LATIN)
+V445-ADDED-12
+V445-REJECTED-12-NetworkError: A network error occurred.-HITS3
+V445-ROUND-13
+V445-SRC-13-local:--default--)
+V445-ADDED-13
+V445-REJECTED-13-NetworkError: A network error occurred.-HITS3
+V445-ROUND-14
+V445-SRC-14-ttf
+V445-ADDED-14
+V445-REJECTED-14-NetworkError: A network error occurred.-HITS3
+V445-DONE-HITS3
